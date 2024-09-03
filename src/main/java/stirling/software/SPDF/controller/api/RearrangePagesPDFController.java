@@ -2,6 +2,7 @@ package stirling.software.SPDF.controller.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.pdfbox.Loader;
@@ -50,7 +51,9 @@ public class RearrangePagesPDFController {
         String[] pageOrderArr = pagesToDelete.split(",");
 
         List<Integer> pagesToRemove =
-                GeneralUtils.parsePageList(pageOrderArr, document.getNumberOfPages());
+                GeneralUtils.parsePageList(pageOrderArr, document.getNumberOfPages(), false);
+
+        Collections.sort(pagesToRemove);
 
         for (int i = pagesToRemove.size() - 1; i >= 0; i--) {
             int pageIndex = pagesToRemove.get(i);
@@ -142,6 +145,28 @@ public class RearrangePagesPDFController {
         return newPageOrder;
     }
 
+    /**
+     * Rearrange pages in a PDF file by merging odd and even pages. The first half of the pages will
+     * be the odd pages, and the second half will be the even pages as input. <br>
+     * This method is visible for testing purposes only.
+     *
+     * @param totalPages Total number of pages in the PDF file.
+     * @return List of page numbers in the new order. The first page is 0.
+     */
+    List<Integer> oddEvenMerge(int totalPages) {
+        List<Integer> newPageOrderZeroBased = new ArrayList<>();
+        int numberOfOddPages = (totalPages + 1) / 2;
+
+        for (int oneBasedIndex = 1; oneBasedIndex < (numberOfOddPages + 1); oneBasedIndex++) {
+            newPageOrderZeroBased.add((oneBasedIndex - 1));
+            if (numberOfOddPages + oneBasedIndex <= totalPages) {
+                newPageOrderZeroBased.add((numberOfOddPages + oneBasedIndex - 1));
+            }
+        }
+
+        return newPageOrderZeroBased;
+    }
+
     private List<Integer> processSortTypes(String sortTypes, int totalPages) {
         try {
             SortTypes mode = SortTypes.valueOf(sortTypes.toUpperCase());
@@ -156,6 +181,8 @@ public class RearrangePagesPDFController {
                     return sideStitchBooklet(totalPages);
                 case ODD_EVEN_SPLIT:
                     return oddEvenSplit(totalPages);
+                case ODD_EVEN_MERGE:
+                    return oddEvenMerge(totalPages);
                 case REMOVE_FIRST:
                     return removeFirst(totalPages);
                 case REMOVE_LAST:
@@ -192,7 +219,7 @@ public class RearrangePagesPDFController {
             if (sortType != null && sortType.length() > 0) {
                 newPageOrder = processSortTypes(sortType, totalPages);
             } else {
-                newPageOrder = GeneralUtils.parsePageList(pageOrderArr, totalPages);
+                newPageOrder = GeneralUtils.parsePageList(pageOrderArr, totalPages, false);
             }
             logger.info("newPageOrder = " + newPageOrder);
             logger.info("totalPages = " + totalPages);

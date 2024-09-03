@@ -18,6 +18,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.apache.pdfbox.util.Matrix;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,6 +40,9 @@ import stirling.software.SPDF.utils.WebResponseUtils;
 @Tag(name = "General", description = "General APIs")
 public class SplitPdfBySectionsController {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(SplitPdfBySectionsController.class);
+
     @PostMapping(value = "/split-pdf-by-sections", consumes = "multipart/form-data")
     @Operation(
             summary = "Split PDF pages into smaller sections",
@@ -53,8 +58,18 @@ public class SplitPdfBySectionsController {
         // Process the PDF based on split parameters
         int horiz = request.getHorizontalDivisions() + 1;
         int verti = request.getVerticalDivisions() + 1;
-
+        boolean merge = request.isMerge();
         List<PDDocument> splitDocuments = splitPdfPages(sourceDocument, verti, horiz);
+
+        String filename =
+                Filenames.toSimpleFileName(file.getOriginalFilename())
+                        .replaceFirst("[.][^.]+$", "");
+        if (merge) {
+            MergeController mergeController = new MergeController();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            mergeController.mergeDocuments(splitDocuments).save(baos);
+            return WebResponseUtils.bytesToWebResponse(baos.toByteArray(), filename + "_split.pdf");
+        }
         for (PDDocument doc : splitDocuments) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             doc.save(baos);
@@ -65,9 +80,6 @@ public class SplitPdfBySectionsController {
         sourceDocument.close();
 
         Path zipFile = Files.createTempFile("split_documents", ".zip");
-        String filename =
-                Filenames.toSimpleFileName(file.getOriginalFilename())
-                        .replaceFirst("[.][^.]+$", "");
         byte[] data;
 
         try (ZipOutputStream zipOut = new ZipOutputStream(Files.newOutputStream(zipFile))) {
@@ -85,10 +97,10 @@ public class SplitPdfBySectionsController {
                 if (sectionNum == horiz * verti) pageNum++;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("exception", e);
         } finally {
             data = Files.readAllBytes(zipFile);
-            Files.delete(zipFile);
+            Files.deleteIfExists(zipFile);
         }
 
         return WebResponseUtils.bytesToWebResponse(

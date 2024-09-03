@@ -96,7 +96,6 @@ document.getElementById("submitConfigBtn").addEventListener("click", function ()
   for (let i = 0; i < pipelineList.length; i++) {
     let operationName = pipelineList[i].querySelector(".operationName").textContent;
     let parameters = operationSettings[operationName] || {};
-
     pipelineConfig.pipeline.push({
       operation: operationName,
       parameters: parameters,
@@ -104,7 +103,6 @@ document.getElementById("submitConfigBtn").addEventListener("click", function ()
   }
 
   let pipelineConfigJson = JSON.stringify(pipelineConfig, null, 2);
-
   let formData = new FormData();
 
   let fileInput = document.getElementById("fileInput-input");
@@ -218,6 +216,41 @@ fetch("v1/api-docs")
     });
   });
 
+document.getElementById('deletePipelineBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    let pipelineName = document.getElementById('pipelineName').value; 
+	if (confirm(deletePipelineText + pipelineName)) {
+		removePipelineFromUI(pipelineName);
+	    let key = "#Pipeline-" + pipelineName;
+	    if (localStorage.getItem(key)) {
+	            localStorage.removeItem(key);
+	    } 
+	    let pipelineSelect = document.getElementById("pipelineSelect");
+	    let modal = document.getElementById('pipelineSettingsModal');
+	    if (modal.style.display !== 'none') {
+	        $('#pipelineSettingsModal').modal('hide');
+	    }
+
+	    if (pipelineSelect.options.length > 0) {
+	        pipelineSelect.selectedIndex = 0;
+	        pipelineSelect.dispatchEvent(new Event('change'));
+	    }
+    }
+});
+
+function removePipelineFromUI(pipelineName) {
+    let pipelineSelect = document.getElementById("pipelineSelect");
+    for (let i = 0; i < pipelineSelect.options.length; i++) {
+		console.log(pipelineSelect.options[i])
+		console.log("list " + pipelineSelect.options[i].innerText + " vs " + pipelineName)
+        if (pipelineSelect.options[i].innerText === pipelineName) {
+            pipelineSelect.remove(i);
+            break;
+        }
+    }
+}
+
+
 document.getElementById("addOperationBtn").addEventListener("click", function () {
   let selectedOperation = document.getElementById("operationsDropdown").value;
   let pipelineList = document.getElementById("pipelineList");
@@ -248,20 +281,20 @@ document.getElementById("addOperationBtn").addEventListener("click", function ()
   }
 
   listItem.innerHTML = `
-	    <div class="d-flex justify-content-between align-items-center w-100">
-	        <div class="operationName">${selectedOperation}</div>
-	        <div class="arrows d-flex">
-	            <button class="btn btn-secondary move-up ms-1"><span>&uarr;</span></button>
-	            <button class="btn btn-secondary move-down ms-1"><span>&darr;</span></button>
-	            <button class="btn ${hasSettings ? "btn-warning" : "btn-secondary"} pipelineSettings ms-1" ${
+      <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="operationName">${selectedOperation}</div>
+          <div class="arrows d-flex">
+              <button class="btn btn-secondary move-up ms-1"><span class="material-symbols-rounded">arrow_upward</span></button>
+              <button class="btn btn-secondary move-down ms-1"><span class="material-symbols-rounded">arrow_downward</span></button>
+              <button class="btn ${hasSettings ? "btn-warning" : "btn-secondary"} pipelineSettings ms-1" ${
                 hasSettings ? "" : "disabled"
               }>
-			        <span style="color: ${hasSettings ? "white" : "grey"};">⚙️</span>
-			    </button>
-	            <button class="btn btn-danger remove ms-1"><span>X</span></button>
-	        </div>
-	    </div>
-	`;
+              <span class="material-symbols-rounded">settings</span>
+          </button>
+              <button class="btn btn-danger remove ms-1"><span class="material-symbols-rounded">close</span></button>
+          </div>
+      </div>
+  `;
 
   pipelineList.appendChild(listItem);
 
@@ -378,18 +411,22 @@ document.getElementById("addOperationBtn").addEventListener("click", function ()
             parameterInput.type = "checkbox";
             if (defaultValue === true) parameterInput.checked = true;
             break;
-          case "array":
-          case "object":
-            //TODO compare to doc and check if fileInput array? parameter.schema.format === 'binary'
-            parameterInput = document.createElement("textarea");
-            parameterInput.placeholder = `Enter a JSON formatted ${parameter.schema.type}, If this is a fileInput, it is not currently supported`;
-            parameterInput.className = "form-control";
-            break;
-          default:
-            parameterInput = document.createElement("input");
-            parameterInput.type = "text";
-            parameterInput.className = "form-control";
-            if (defaultValue !== undefined) parameterInput.value = defaultValue;
+           case "array":
+		     // If parameter.schema.format === 'binary' is to be checked, it should be checked here
+		     parameterInput = document.createElement("textarea");
+		     parameterInput.placeholder = 'Enter a JSON formatted array, e.g., ["item1", "item2", "item3"]';
+		     parameterInput.className = "form-control";
+		     break;
+		   case "object":
+		     parameterInput = document.createElement("textarea");
+		     parameterInput.placeholder = 'Enter a JSON formatted object, e.g., {"key": "value"}  If this is a fileInput, it is not currently supported';
+		     parameterInput.className = "form-control";
+		     break;
+		   default:
+             parameterInput = document.createElement("input");
+             parameterInput.type = "text";
+             parameterInput.className = "form-control";
+             if (defaultValue !== undefined) parameterInput.value = defaultValue;
         }
       }
       parameterInput.id = parameter.name;
@@ -441,16 +478,21 @@ document.getElementById("addOperationBtn").addEventListener("click", function ()
                 break;
               case "array":
               case "object":
-                if (value === null || value === "") {
-                  settings[parameter.name] = "";
-                } else {
-                  try {
-                    settings[parameter.name] = JSON.parse(value);
-                  } catch (err) {
-                    console.error(`Invalid JSON format for ${parameter.name}`);
-                  }
-                }
-                break;
+                 if (value === null || value === "") {
+				    settings[parameter.name] = "";
+				  } else {
+				    try {
+				      const parsedValue = JSON.parse(value);
+				      if (Array.isArray(parsedValue)) {
+				        settings[parameter.name] = parsedValue;
+				      } else {
+				        settings[parameter.name] = value; 
+				      }
+				    } catch (e) {
+				      settings[parameter.name] = value;
+				    }
+				 }
+				 break;
               default:
                 settings[parameter.name] = value;
             }
@@ -465,19 +507,44 @@ document.getElementById("addOperationBtn").addEventListener("click", function ()
     //pipelineSettingsModal.style.display = "block";
 
     //pipelineSettingsModal.getElementsByClassName("close")[0].onclick = function() {
-    //	pipelineSettingsModal.style.display = "none";
+    //  pipelineSettingsModal.style.display = "none";
     //}
 
     //window.onclick = function(event) {
-    //	if (event.target == pipelineSettingsModal) {
-    //		pipelineSettingsModal.style.display = "none";
-    //	}
+    //  if (event.target == pipelineSettingsModal) {
+    //    pipelineSettingsModal.style.display = "none";
+    //  }
     //}
   }
   showpipelineSettingsModal(selectedOperation);
   updateConfigInDropdown();
   hideOrShowPipelineHeader();
 });
+
+function loadBrowserPipelinesIntoDropdown() {
+  let pipelineSelect = document.getElementById("pipelineSelect");
+
+  // Retrieve the current set of option values for comparison
+  let existingOptions = new Set();
+  for (let option of pipelineSelect.options) {
+    existingOptions.add(option.value);
+  }
+
+   // Iterate over all items in localStorage
+  for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    if (key.startsWith("#Pipeline-")) {
+      let pipelineData = localStorage.getItem(key);
+      // Check if the data is already in the dropdown
+      if (!existingOptions.has(pipelineData)) {
+        let pipelineName = key.replace("#Pipeline-", ""); // Extract pipeline name from the key
+        let option = new Option(pipelineName, pipelineData); // Use pipeline data as the option value
+        pipelineSelect.appendChild(option);
+      }
+    }
+  }
+}
+loadBrowserPipelinesIntoDropdown();
 
 function updateConfigInDropdown() {
   let pipelineSelect = document.getElementById("pipelineSelect");
@@ -496,13 +563,13 @@ function updateConfigInDropdown() {
 }
 
 var saveBtn = document.getElementById("savePipelineBtn");
-
+var saveBrowserBtn = document.getElementById("saveBrowserPipelineBtn");
 // Remove any existing event listeners
 saveBtn.removeEventListener("click", savePipeline);
-
+saveBrowserBtn.removeEventListener("click", savePipelineToBrowser);
 // Add the event listener
 saveBtn.addEventListener("click", savePipeline);
-console.log("saveBtn", saveBtn);
+saveBrowserBtn.addEventListener("click", savePipelineToBrowser);
 
 function configToJson() {
   if (!validatePipeline()) {
@@ -533,10 +600,24 @@ function configToJson() {
       parameters: parameters,
     });
   }
-
   return JSON.stringify(pipelineConfig, null, 2);
 }
 
+function savePipelineToBrowser() {
+  let pipelineConfigJson = configToJson();
+  if (!pipelineConfigJson) {
+    console.error("Failed to save pipeline: Invalid configuration");
+    return;
+  }
+
+  let pipelineName = document.getElementById("pipelineName").value;
+  if (!pipelineName) {
+    console.error("Failed to save pipeline: Pipeline name is required");
+    return;
+  }
+  localStorage.setItem("#Pipeline-" +pipelineName, pipelineConfigJson);
+  console.log("Pipeline configuration saved to localStorage");
+}
 function savePipeline() {
   let pipelineConfigJson = configToJson();
   if (!pipelineConfigJson) {
@@ -602,7 +683,13 @@ async function processPipelineConfig(configString) {
           case "text":
           case "textarea":
           default:
-            input.value = JSON.stringify(operationConfig.parameters[parameterName]);
+			var value = operationConfig.parameters[parameterName]
+			if (typeof value !== 'string') {
+			    input.value = JSON.stringify(value) ;
+			} else {
+				input.value = value;
+			}
+            
         }
       }
     });

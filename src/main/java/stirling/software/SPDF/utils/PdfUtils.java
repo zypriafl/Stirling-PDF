@@ -1,20 +1,18 @@
 package stirling.software.SPDF.utils;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
+import javax.imageio.*;
 import javax.imageio.stream.ImageOutputStream;
 
 import org.apache.pdfbox.Loader;
@@ -38,6 +36,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.github.pixee.security.Filenames;
+
+import stirling.software.SPDF.model.PdfMetadata;
 
 public class PdfUtils {
 
@@ -214,6 +214,7 @@ public class PdfUtils {
             throws IOException, Exception {
         try (PDDocument document = Loader.loadPDF(inputStream)) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
+            pdfRenderer.setSubsamplingAllowed(true);
             int pageCount = document.getNumberOfPages();
 
             // Create a ByteArrayOutputStream to save the image(s) to
@@ -244,19 +245,64 @@ public class PdfUtils {
                     writer.dispose();
                 } else {
                     // Combine all images into a single big image
-                    BufferedImage image = pdfRenderer.renderImageWithDPI(0, DPI, colorType);
+
+                    // Calculate the combined image dimensions
+                    int maxWidth = 0;
+                    int totalHeight = 0;
+
+                    BufferedImage pdfSizeImage = null;
+                    int pdfSizeImageIndex = -1;
+
+                    // Using a map to store the rendered dimensions of each page size
+                    // to avoid rendering the same page sizes multiple times
+                    HashMap<PdfRenderSettingsKey, PdfImageDimensionValue> pageSizes =
+                            new HashMap<>();
+                    for (int i = 0; i < pageCount; ++i) {
+                        PDPage page = document.getPage(i);
+                        PDRectangle mediaBox = page.getMediaBox();
+                        int rotation = page.getRotation();
+                        PdfRenderSettingsKey settings =
+                                new PdfRenderSettingsKey(
+                                        mediaBox.getWidth(), mediaBox.getHeight(), rotation);
+                        PdfImageDimensionValue dimension = pageSizes.get(settings);
+                        if (dimension == null) {
+                            // Render the image to get the dimensions
+                            pdfSizeImage = pdfRenderer.renderImageWithDPI(i, DPI, colorType);
+                            pdfSizeImageIndex = i;
+                            dimension =
+                                    new PdfImageDimensionValue(
+                                            pdfSizeImage.getWidth(), pdfSizeImage.getHeight());
+                            pageSizes.put(settings, dimension);
+                            if (pdfSizeImage.getWidth() > maxWidth) {
+                                maxWidth = pdfSizeImage.getWidth();
+                            }
+                        }
+                        totalHeight += dimension.height();
+                    }
+
+                    // Create a new BufferedImage to store the combined images
                     BufferedImage combined =
-                            new BufferedImage(
-                                    image.getWidth(),
-                                    image.getHeight() * pageCount,
-                                    BufferedImage.TYPE_INT_RGB);
+                            prepareImageForPdfToImage(maxWidth, totalHeight, imageType);
                     Graphics g = combined.getGraphics();
 
+                    int currentHeight = 0;
+                    BufferedImage pageImage;
+
+                    // Check if the first image is the last rendered image
+                    boolean firstImageAlreadyRendered = pdfSizeImageIndex == 0;
+
                     for (int i = 0; i < pageCount; ++i) {
-                        if (i != 0) {
-                            image = pdfRenderer.renderImageWithDPI(i, DPI, colorType);
+                        if (firstImageAlreadyRendered && i == 0) {
+                            pageImage = pdfSizeImage;
+                        } else {
+                            pageImage = pdfRenderer.renderImageWithDPI(i, DPI, colorType);
                         }
-                        g.drawImage(image, 0, i * image.getHeight(), null);
+
+                        // Calculate the x-coordinate to center the image
+                        int x = (maxWidth - pageImage.getWidth()) / 2;
+
+                        g.drawImage(pageImage, x, currentHeight, null);
+                        currentHeight += pageImage.getHeight();
                     }
 
                     // Write the image to the output stream
@@ -293,6 +339,47 @@ public class PdfUtils {
             logger.error("Error converting PDF to image", e);
             throw e;
         }
+    }
+
+    /**
+     * Converts a given Pdf file to PDF-Image.
+     *
+     * @param document to be converted. Note: the caller is responsible for closing the document
+     * @return converted document to PDF-Image
+     * @throws IOException if conversion fails
+     */
+    public static PDDocument convertPdfToPdfImage(PDDocument document) throws IOException {
+        PDDocument imageDocument = new PDDocument();
+        PDFRenderer pdfRenderer = new PDFRenderer(document);
+        pdfRenderer.setSubsamplingAllowed(true);
+        for (int page = 0; page < document.getNumberOfPages(); ++page) {
+            BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
+            PDPage newPage = new PDPage(new PDRectangle(bim.getWidth(), bim.getHeight()));
+            imageDocument.addPage(newPage);
+            PDImageXObject pdImage = LosslessFactory.createFromImage(imageDocument, bim);
+            PDPageContentStream contentStream =
+                    new PDPageContentStream(imageDocument, newPage, AppendMode.APPEND, true, true);
+            contentStream.drawImage(pdImage, 0, 0);
+            contentStream.close();
+        }
+        return imageDocument;
+    }
+
+    private static BufferedImage prepareImageForPdfToImage(
+            int maxWidth, int height, String imageType) {
+        BufferedImage combined;
+        if ("png".equalsIgnoreCase(imageType)) {
+            combined = new BufferedImage(maxWidth, height, BufferedImage.TYPE_INT_ARGB);
+        } else {
+            combined = new BufferedImage(maxWidth, height, BufferedImage.TYPE_INT_RGB);
+        }
+        if (!"png".equalsIgnoreCase(imageType)) {
+            Graphics g = combined.getGraphics();
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, combined.getWidth(), combined.getHeight());
+            g.dispose();
+        }
+        return combined;
     }
 
     public static byte[] imageToPdf(
@@ -335,13 +422,11 @@ public class PdfUtils {
         }
     }
 
-    private static void addImageToDocument(
+    public static void addImageToDocument(
             PDDocument doc, PDImageXObject image, String fitOption, boolean autoRotate)
             throws IOException {
         boolean imageIsLandscape = image.getWidth() > image.getHeight();
         PDRectangle pageSize = PDRectangle.A4;
-
-        System.out.println(fitOption);
 
         if (autoRotate && imageIsLandscape) {
             pageSize = new PDRectangle(pageSize.getHeight(), pageSize.getWidth());
@@ -420,4 +505,34 @@ public class PdfUtils {
         logger.info("PDF successfully saved to byte array");
         return baos.toByteArray();
     }
+
+    public static PdfMetadata extractMetadataFromPdf(PDDocument pdf) {
+        return PdfMetadata.builder()
+                .author(pdf.getDocumentInformation().getAuthor())
+                .producer(pdf.getDocumentInformation().getProducer())
+                .title(pdf.getDocumentInformation().getTitle())
+                .creator(pdf.getDocumentInformation().getCreator())
+                .subject(pdf.getDocumentInformation().getSubject())
+                .keywords(pdf.getDocumentInformation().getKeywords())
+                .creationDate(pdf.getDocumentInformation().getCreationDate())
+                .modificationDate(pdf.getDocumentInformation().getModificationDate())
+                .build();
+    }
+
+    public static void setMetadataToPdf(PDDocument pdf, PdfMetadata pdfMetadata) {
+        pdf.getDocumentInformation().setAuthor(pdfMetadata.getAuthor());
+        pdf.getDocumentInformation().setProducer(pdfMetadata.getProducer());
+        pdf.getDocumentInformation().setTitle(pdfMetadata.getTitle());
+        pdf.getDocumentInformation().setCreator(pdfMetadata.getCreator());
+        pdf.getDocumentInformation().setSubject(pdfMetadata.getSubject());
+        pdf.getDocumentInformation().setKeywords(pdfMetadata.getKeywords());
+        pdf.getDocumentInformation().setCreationDate(pdfMetadata.getCreationDate());
+        pdf.getDocumentInformation().setModificationDate(Calendar.getInstance());
+    }
+
+    /** Key for storing the dimensions of a rendered image in a map. */
+    private record PdfRenderSettingsKey(float mediaBoxWidth, float mediaBoxHeight, int rotation) {}
+
+    /** Value for storing the dimensions of a rendered image in a map. */
+    private record PdfImageDimensionValue(int width, int height) {}
 }

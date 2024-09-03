@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import stirling.software.SPDF.model.ApplicationProperties;
+import stirling.software.SPDF.utils.CheckProgramInstall;
+
 @Controller
 @Tag(name = "Misc", description = "Miscellaneous APIs")
 public class OtherWebController {
+
+    @Autowired ApplicationProperties applicationProperties;
+
     @GetMapping("/compress-pdf")
     @Hidden
     public String compressPdfForm(Model model) {
@@ -28,6 +35,8 @@ public class OtherWebController {
     @Hidden
     public ModelAndView extractImageScansForm() {
         ModelAndView modelAndView = new ModelAndView("misc/extract-image-scans");
+        boolean isPython = CheckProgramInstall.isPythonAvailable();
+        modelAndView.addObject("isPython", isPython);
         modelAndView.addObject("currentPage", "extract-image-scans");
         return modelAndView;
     }
@@ -51,6 +60,13 @@ public class OtherWebController {
     public String addPageNumbersForm(Model model) {
         model.addAttribute("currentPage", "add-page-numbers");
         return "misc/add-page-numbers";
+    }
+
+    @GetMapping("/fake-scan")
+    @Hidden
+    public String fakeScanForm(Model model) {
+        model.addAttribute("currentPage", "fake-scan");
+        return "misc/fake-scan";
     }
 
     @GetMapping("/extract-images")
@@ -81,8 +97,15 @@ public class OtherWebController {
         return "misc/compare";
     }
 
+    @GetMapping("/print-file")
+    @Hidden
+    public String printFileForm(Model model) {
+        model.addAttribute("currentPage", "print-file");
+        return "misc/print-file";
+    }
+
     public List<String> getAvailableTesseractLanguages() {
-        String tessdataDir = "/usr/share/tesseract-ocr/5/tessdata";
+        String tessdataDir = applicationProperties.getSystem().getTessdataDir();
         File[] files = new File(tessdataDir).listFiles();
         if (files == null) {
             return Collections.emptyList();

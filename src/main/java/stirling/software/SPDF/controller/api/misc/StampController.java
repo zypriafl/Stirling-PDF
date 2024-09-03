@@ -88,7 +88,7 @@ public class StampController {
         // Load the input PDF
         PDDocument document = Loader.loadPDF(pdfFile.getBytes());
 
-        List<Integer> pageNumbers = request.getPageNumbersList(document, false);
+        List<Integer> pageNumbers = request.getPageNumbersList(document, true);
 
         for (int pageIndex : pageNumbers) {
             int zeroBasedIndex = pageIndex - 1;
@@ -185,10 +185,12 @@ public class StampController {
             try (InputStream is = classPathResource.getInputStream();
                     FileOutputStream os = new FileOutputStream(tempFile)) {
                 IOUtils.copy(is, os);
+                font = PDType0Font.load(document, tempFile);
+            } finally {
+                if (tempFile != null) {
+                    Files.deleteIfExists(tempFile.toPath());
+                }
             }
-
-            font = PDType0Font.load(document, tempFile);
-            tempFile.deleteOnExit();
         }
 
         contentStream.setFont(font, fontSize);

@@ -33,7 +33,7 @@ public class AutoRenameController {
     private static final Logger logger = LoggerFactory.getLogger(AutoRenameController.class);
 
     private static final float TITLE_FONT_SIZE_THRESHOLD = 20.0f;
-    private static final int LINE_LIMIT = 11;
+    private static final int LINE_LIMIT = 200;
 
     @PostMapping(consumes = "multipart/form-data", value = "/auto-rename")
     @Operation(
@@ -130,7 +130,7 @@ public class AutoRenameController {
 
         // Sanitize the header string by removing characters not allowed in a filename.
         if (header != null && header.length() < 255) {
-            header = header.replaceAll("[/\\\\?%*:|\"<>]", "");
+            header = header.replaceAll("[/\\\\?%*:|\"<>]", "").trim();
             return WebResponseUtils.pdfDocToWebResponse(document, header + ".pdf");
         } else {
             logger.info("File has no good title to be found");

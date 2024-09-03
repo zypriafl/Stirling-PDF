@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html th:lang="${#locale.language}" th:lang-direction="#{language.direction}" xmlns:th="http://www.thymeleaf.org">
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
   <head>
   <th:block th:insert="~{fragments/common :: head(title=#{sign.title}, header=#{sign.header})}"></th:block>
-    <link rel="stylesheet" href="css/sign.css">
+    <link rel="stylesheet" th:href="@{'/css/sign.css'}">
   <th:block th:each="font : ${fonts}">
     <style th:inline="text">
       @font-face {
@@ -18,22 +18,25 @@
       }
     </style>
   </th:block>
-    <script src="js/thirdParty/signature_pad.umd.min.js"></script>
-    <script src="js/thirdParty/interact.min.js"></script>
+    <script th:src="@{'/js/thirdParty/signature_pad.umd.min.js'}"></script>
+    <script th:src="@{'/js/thirdParty/interact.min.js'}"></script>
   </head>
 
   <body>
     <div id="page-container">
       <div id="content-wrap">
         <th:block th:insert="~{fragments/navbar.html :: navbar}"></th:block>
-        <br /><br />
+        <br><br>
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-md-6">
-              <h2 th:text="#{sign.header}"></h2>
+            <div class="col-md-6 bg-card">
+              <div class="tool-header">
+                <span class="material-symbols-rounded tool-header-icon sign">signature</span>
+                <span class="tool-header-text" th:text="#{sign.header}"></span>
+              </div>
 
               <!-- pdf selector -->
-              <div th:replace="~{fragments/common :: fileSelector(name='pdf-upload', multiple=false, accept='application/pdf')}"></div>
+              <div th:replace="~{fragments/common :: fileSelector(name='pdf-upload', multipleInputsForSingleRequest=false, disableMultipleFiles=true,  accept='application/pdf')}"></div>
               <script>
                 let originalFileName = '';
                 document.querySelector('input[name=pdf-upload]').addEventListener('change', async (event) => {
@@ -41,7 +44,7 @@
                   if (file) {
                     originalFileName = file.name.replace(/\.[^/.]+$/, "");
                     const pdfData = await file.arrayBuffer();
-                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.js'
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = './pdfjs-legacy/pdf.worker.mjs'
                     const pdfDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
                     await DraggableUtils.renderPage(pdfDoc, 0);
 
@@ -58,7 +61,7 @@
               </script>
               <div class="tab-group show-on-file-selected">
                 <div class="tab-container" th:title="#{sign.upload}">
-                  <div th:replace="~{fragments/common :: fileSelector(name='image-upload', multiple=true, accept='image/*', inputText=#{imgPrompt})}"></div>
+                  <div th:replace="~{fragments/common :: fileSelector(name='image-upload', multipleInputsForSingleRequest=true, accept='image/*', inputText=#{imgPrompt})}"></div>
                     <script>
                       const imageUpload = document.querySelector('input[name=image-upload]');
                       imageUpload.addEventListener('change', e => {
@@ -69,7 +72,7 @@
                           var reader = new FileReader();
                           reader.readAsDataURL(imageFile);
                           reader.onloadend = function (e) {
-                              DraggableUtils.createDraggableCanvasFromUrl(e.target.result);
+                            DraggableUtils.createDraggableCanvasFromUrl(e.target.result);
                           };
                         }
                       });
@@ -162,10 +165,7 @@
                     <textarea class="form-control" id="sigText" name="sigText" rows="3"></textarea>
                     <label th:text="#{font}"></label>
                     <select class="form-control" name="font" id="font-select">
-                      <option th:each="font : ${fonts}"
-                              th:value="${font.name}"
-                              th:text="${font.name}"
-                              th:class="${font.name.toLowerCase()+'-font'}">
+                      <option th:each="font : ${fonts}" th:value="${font.name}" th:text="${font.name}" th:class="${font.name.toLowerCase()+'-font'}">
                       </option>
                     </select>
                     <div class="margin-auto-parent">
@@ -229,7 +229,7 @@
               <!-- draggables box -->
               <div id="box-drag-container" class="show-on-file-selected">
                 <canvas id="pdf-canvas"></canvas>
-                <script src="js/draggable-utils.js"></script>
+                <script th:src="@{'/js/draggable-utils.js'}"></script>
                 <div class="draggable-buttons-box ignore-rtl">
                   <button class="btn btn-outline-secondary" onclick="DraggableUtils.deleteDraggableCanvas(DraggableUtils.getLastInteracted())">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -237,12 +237,12 @@
                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
                     </svg>
                   </button>
-                  <button class="btn btn-outline-secondary" onclick="document.documentElement.getAttribute('lang-direction')==='rtl' ? DraggableUtils.incrementPage() : DraggableUtils.decrementPage()" style="margin-left:auto">
+                  <button class="btn btn-outline-secondary" onclick="document.documentElement.getAttribute('dir')==='rtl' ? DraggableUtils.incrementPage() : DraggableUtils.decrementPage()" style="margin-left:auto">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                     </svg>
                   </button>
-                  <button class="btn btn-outline-secondary" onclick="document.documentElement.getAttribute('lang-direction')==='rtl' ? DraggableUtils.decrementPage() : DraggableUtils.incrementPage()">
+                  <button class="btn btn-outline-secondary" onclick="document.documentElement.getAttribute('dir')==='rtl' ? DraggableUtils.decrementPage() : DraggableUtils.incrementPage()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                     </svg>
@@ -252,7 +252,7 @@
 
               <!-- download button -->
               <div class="margin-auto-parent">
-                  <button id="download-pdf" class="btn btn-primary mb-2 show-on-file-selected margin-center">Download PDF</button>
+                <button id="download-pdf" class="btn btn-primary mb-2 show-on-file-selected margin-center" th:text="#{downloadPdf}"></button>
               </div>
 
               <script>

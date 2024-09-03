@@ -1,7 +1,17 @@
 <!DOCTYPE html>
-<html th:lang="${#locale.language}" th:lang-direction="#{language.direction}" xmlns:th="http://www.thymeleaf.org">
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
   <head>
   <th:block th:insert="~{fragments/common :: head(title=#{AddStampRequest.title}, header=#{AddStampRequest.header})}"></th:block>
+    <style>
+      .a4container {
+        position: relative;
+        width: 50%;
+        aspect-ratio: 0.707/1;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        background-color: white;
+      }
+    </style>
   </head>
 
   <body>
@@ -9,13 +19,16 @@
     <div id="page-container">
       <div id="content-wrap">
         <th:block th:insert="~{fragments/navbar.html :: navbar}"></th:block>
-        <br /><br />
+        <br><br>
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-md-6">
-              <h2 th:text="#{AddStampRequest.header}"></h2>
-              <form method="post" enctype="multipart/form-data" th:action="@{api/v1/misc/add-stamp}">
-                <div th:replace="~{fragments/common :: fileSelector(name='fileInput', multiple=false, accept='application/pdf')}"></div>
+            <div class="col-md-6 bg-card">
+              <div class="tool-header">
+                <span class="material-symbols-rounded tool-header-icon security">approval</span>
+                <span class="tool-header-text" th:text="#{AddStampRequest.header}"></span>
+              </div>
+              <form method="post" enctype="multipart/form-data" th:action="@{'/api/v1/misc/add-stamp'}">
+                <div th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf')}"></div>
                 <br>
                 <div class="mb-3">
                   <label for="pageOrder" th:text="#{pageSelectionPrompt}"></label>
@@ -33,7 +46,7 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="position" th:text="#{AddStampRequest.position}"></label>
+                  <label th:text="#{AddStampRequest.position}"></label>
                   <div class="a4container">
                     <div class="pageNumber" id="1" style="top: 10%; left: 10%;">1</div>
                     <div class="pageNumber" id="2" style="top: 10%; left: 50%;">2</div>
@@ -47,13 +60,13 @@
                   </div>
                 </div>
 
-                <input type="hidden" id="numberInput" name="position" min="1" max="9" value="8" required />
+                <input type="hidden" id="numberInput" name="position" value="8">
 
                 <div class="mb-3">
                   <label for="stampType" class="form-label" th:text="#{AddStampRequest.stampType}">Stamp Type</label>
-                  <select class="form-select" id="stampType" name="stampType" onchange="toggleFileOption()" required>
-                    <option value="text">Text</option>
-                    <option value="image">Image</option>
+                  <select class="form-select" id="stampType" name="stampType" onchange="toggleFileOption()">
+                    <option value="text" th:text="#{watermark.type.1}">Text</option>
+                    <option value="image" th:text="#{watermark.type.2}">Image</option>
                   </select>
                 </div>
 
@@ -70,11 +83,11 @@
                 <div id="alphabetGroup" class="mb-3">
                   <label for="alphabet" class="form-label" th:text="#{AddStampRequest.alphabet}">Alphabet</label>
                   <select class="form-select" id="alphabet" name="alphabet">
-                      <option value="roman">Roman</option>
-                      <option value="arabic">العربية</option>
-                      <option value="japanese">日本語</option>
-                      <option value="korean">한국어</option>
-                      <option value="chinese">简体中文</option>
+                    <option value="roman">Roman</option>
+                    <option value="arabic">العربية</option>
+                    <option value="japanese">日本語</option>
+                    <option value="korean">한국어</option>
+                    <option value="chinese">简体中文</option>
                   </select>
                 </div>
 

@@ -6,8 +6,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,10 +26,6 @@ import stirling.software.SPDF.utils.WebResponseUtils;
 @RequestMapping("/api/v1/convert")
 public class ConvertWebsiteToPDF {
 
-    @Autowired
-    @Qualifier("bookAndHtmlFormatsInstalled")
-    private boolean bookAndHtmlFormatsInstalled;
-
     @PostMapping(consumes = "multipart/form-data", value = "/url/pdf")
     @Operation(
             summary = "Convert a URL to a PDF",
@@ -45,6 +39,12 @@ public class ConvertWebsiteToPDF {
         if (!URL.matches("^https?://.*") || !GeneralUtils.isValidURL(URL)) {
             throw new IllegalArgumentException("Invalid URL format provided.");
         }
+
+        // validate the URL is reachable
+        if (!GeneralUtils.isURLReachable(URL)) {
+            throw new IllegalArgumentException("URL is not reachable, please provide a valid URL.");
+        }
+
         Path tempOutputFile = null;
         byte[] pdfBytes;
         try {
@@ -53,11 +53,7 @@ public class ConvertWebsiteToPDF {
 
             // Prepare the OCRmyPDF command
             List<String> command = new ArrayList<>();
-            if (!bookAndHtmlFormatsInstalled) {
-                command.add("weasyprint");
-            } else {
-                command.add("wkhtmltopdf");
-            }
+            command.add("weasyprint");
             command.add(URL);
             command.add(tempOutputFile.toString());
 
@@ -69,7 +65,7 @@ public class ConvertWebsiteToPDF {
             pdfBytes = Files.readAllBytes(tempOutputFile);
         } finally {
             // Clean up the temporary files
-            Files.delete(tempOutputFile);
+            Files.deleteIfExists(tempOutputFile);
         }
         // Convert URL to a safe filename
         String outputFilename = convertURLToFileName(URL);

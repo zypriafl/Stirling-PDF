@@ -25,16 +25,46 @@ $(document).ready(function () {
     const originalButtonText = $("#submitBtn").text();
     $("#submitBtn").text("Processing...");
     console.log(override);
+
+    // Set a timeout to show the game button if operation takes more than 5 seconds
+    const timeoutId = setTimeout(() => {
+      var boredWaiting = localStorage.getItem("boredWaiting") || "disabled";
+      const showGameBtn = document.getElementById("show-game-btn");
+      if (boredWaiting === "enabled" && showGameBtn) {
+        showGameBtn.style.display = "block";
+      }
+    }, 5000);
+
     try {
       if (remoteCall === true) {
-        if (override === "multi" || (!multiple && files.length > 1 && override !== "single")) {
+        if (override === "multi" || (!multipleInputsForSingleRequest && files.length > 1 && override !== "single")) {
           await submitMultiPdfForm(url, files);
         } else {
           await handleSingleDownload(url, formData);
         }
       }
+      clearTimeout(timeoutId);
       $("#submitBtn").text(originalButtonText);
+      
+      // After process finishes, check for boredWaiting and gameDialog open status
+      const boredWaiting = localStorage.getItem("boredWaiting") || "disabled";
+      const gameDialog = document.getElementById('game-container-wrapper');
+      if (boredWaiting === "enabled" && gameDialog && gameDialog.open) {
+        // Display a green banner at the bottom of the screen saying "Download complete"
+        let downloadCompleteText = "Download Complete";
+        if(window.downloadCompleteText){
+          downloadCompleteText = window.downloadCompleteText;
+        }
+        $("body").append('<div id="download-complete-banner" style="position:fixed;bottom:0;left:0;width:100%;background-color:green;color:white;text-align:center;padding:10px;font-size:16px;z-index:1000;">'+ downloadCompleteText + '</div>');
+        setTimeout(function() {
+          $("#download-complete-banner").fadeOut("slow", function() {
+            $(this).remove(); // Remove the banner after fading out
+          });
+        }, 5000); // Banner will fade out after 5 seconds
+      }
+      
     } catch (error) {
+      clearTimeout(timeoutId);
       handleDownloadError(error);
       $("#submitBtn").text(originalButtonText);
       console.error(error);
@@ -49,8 +79,8 @@ async function handleSingleDownload(url, formData, isMulti = false, isZip = fals
 
     if (!response.ok) {
       if (contentType && contentType.includes("application/json")) {
-        return handleJsonResponse(response);
         console.error("Throwing error banner, response was not okay");
+        return handleJsonResponse(response);
       }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -147,10 +177,10 @@ async function submitMultiPdfForm(url, files) {
   const zipFiles = files.length > zipThreshold;
   let jszip = null;
   // Show the progress bar
-  $("#progressBarContainer").show();
+  $(".progressBarContainer").show();
   // Initialize the progress bar
 
-  let progressBar = $("#progressBar");
+  let progressBar = $(".progressBar");
   progressBar.css("width", "0%");
   progressBar.attr("aria-valuenow", 0);
   progressBar.attr("aria-valuemax", files.length);

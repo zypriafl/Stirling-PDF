@@ -64,7 +64,7 @@ public class PipelineProcessor {
 
     private String getBaseUrl() {
         String contextPath = servletContext.getContextPath();
-        String port = SPdfApplication.getPort();
+        String port = SPdfApplication.getStaticPort();
 
         return "http://localhost:" + port + contextPath + "/";
     }
@@ -105,7 +105,14 @@ public class PipelineProcessor {
                             body.add("fileInput", file);
 
                             for (Entry<String, Object> entry : parameters.entrySet()) {
-                                body.add(entry.getKey(), entry.getValue());
+                                if (entry.getValue() instanceof List) {
+                                    List<?> list = (List<?>) entry.getValue();
+                                    for (Object item : list) {
+                                        body.add(entry.getKey(), item);
+                                    }
+                                } else {
+                                    body.add(entry.getKey(), entry.getValue());
+                                }
                             }
 
                             ResponseEntity<byte[]> response = sendWebRequest(url, body);
@@ -167,7 +174,14 @@ public class PipelineProcessor {
                     }
 
                     for (Entry<String, Object> entry : parameters.entrySet()) {
-                        body.add(entry.getKey(), entry.getValue());
+                        if (entry.getValue() instanceof List) {
+                            List<?> list = (List<?>) entry.getValue();
+                            for (Object item : list) {
+                                body.add(entry.getKey(), item);
+                            }
+                        } else {
+                            body.add(entry.getKey(), entry.getValue());
+                        }
                     }
 
                     ResponseEntity<byte[]> response = sendWebRequest(url, body);

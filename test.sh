@@ -18,7 +18,8 @@ check_health() {
 		fi
 	done
 	echo -e "\n$service_name is healthy!"
-
+	echo "Printing logs for $service_name:"
+    docker logs "$service_name"
     return 0
 }
 
@@ -40,11 +41,6 @@ test_compose() {
         echo "$service_name test failed."
         status=1
     fi
-
-    # Perform additional tests if needed
-
-    # Tear down the service
-    docker-compose -f "$compose_file" down
 
     return $status
 }
@@ -77,14 +73,28 @@ main() {
 
 
     # Building Docker images
-    docker build --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest -f ./Dockerfile .
-    docker build --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-lite -f ./Dockerfile-lite .
-    docker build --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-ultra-lite -f ./Dockerfile-ultra-lite .
-
+    docker build --no-cache --pull --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest -f ./Dockerfile .
+    docker build --no-cache --pull --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-ultra-lite -f ./Dockerfile-ultra-lite .
+	
     # Test each configuration
     run_tests "Stirling-PDF-Ultra-Lite" "./exampleYmlFiles/docker-compose-latest-ultra-lite.yml"
-    run_tests "Stirling-PDF-Lite" "./exampleYmlFiles/docker-compose-latest-lite.yml"
+	docker-compose -f "./exampleYmlFiles/docker-compose-latest-ultra-lite.yml" down
+	
+
     run_tests "Stirling-PDF" "./exampleYmlFiles/docker-compose-latest.yml"
+	if [ $? -eq 0 ]; then
+		cd cucumber
+		if behave; then
+			passed_tests+=("Stirling-PDF-Regression")
+		else
+			failed_tests+=("Stirling-PDF-Regression")
+			echo "Printing docker logs of failed regression"
+			docker logs "Stirling-PDF"
+			echo "Printed docker logs of failed regression"
+		fi
+		cd ..
+	fi
+	docker-compose -f "./exampleYmlFiles/docker-compose-latest.yml" down
 
     export DOCKER_ENABLE_SECURITY=true
     # Run the gradlew build command and check if it fails
@@ -95,15 +105,20 @@ main() {
 
 
     # Building Docker images with security enabled
-    docker build --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest -f ./Dockerfile .
-    docker build --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-lite -f ./Dockerfile-lite .
-    docker build --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-ultra-lite -f ./Dockerfile-ultra-lite .
-
+    docker build --no-cache --pull --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest -f ./Dockerfile .
+    docker build --no-cache --pull --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-ultra-lite -f ./Dockerfile-ultra-lite .
+    docker build --no-cache --pull --build-arg VERSION_TAG=alpha -t frooodle/s-pdf:latest-fat -f ./Dockerfile-fat .
+    
+    
     # Test each configuration with security
     run_tests "Stirling-PDF-Ultra-Lite-Security" "./exampleYmlFiles/docker-compose-latest-ultra-lite-security.yml"
-    run_tests "Stirling-PDF-Lite-Security" "./exampleYmlFiles/docker-compose-latest-lite-security.yml"
+	docker-compose -f "./exampleYmlFiles/docker-compose-latest-ultra-lite-security.yml" down
     run_tests "Stirling-PDF-Security" "./exampleYmlFiles/docker-compose-latest-security.yml"
-
+	docker-compose -f "./exampleYmlFiles/docker-compose-latest-security.yml" down
+	
+	run_tests "Stirling-PDF-Security-Fat" "./exampleYmlFiles/docker-compose-latest-fat-security.yml"
+	docker-compose -f "./exampleYmlFiles/docker-compose-latest-fat-security.yml" down
+	
     # Report results
     echo "All tests completed in $SECONDS seconds."
 

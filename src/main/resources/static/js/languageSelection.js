@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setLanguageForDropdown(dropdownClass) {
-  const defaultLocale = document.documentElement.lang || "en_GB";
+  const defaultLocale = document.documentElement.getAttribute("data-language") || "en_GB";
   const storedLocale = localStorage.getItem("languageCode") || defaultLocale;
   const dropdownItems = document.querySelectorAll(dropdownClass);
 
@@ -47,8 +47,10 @@ function handleDropdownItemClick(event) {
     localStorage.setItem("languageCode", languageCode);
 
     const currentUrl = window.location.href;
-    if (currentUrl.indexOf("?lang=") === -1) {
+    if (currentUrl.indexOf("?lang=") === -1 && currentUrl.indexOf("&lang=") === -1) {
       window.location.href = currentUrl + "?lang=" + languageCode;
+    } else if (currentUrl.indexOf("&lang=") !== -1 && currentUrl.indexOf("?lang=") === -1) {
+      window.location.href = currentUrl.replace(/&lang=\w{2,}/, "&lang=" + languageCode);
     } else {
       window.location.href = currentUrl.replace(/\?lang=\w{2,}/, "?lang=" + languageCode);
     }
@@ -58,22 +60,21 @@ function handleDropdownItemClick(event) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".nav-item.dropdown").forEach((element) => {
-    const dropdownMenu = element.querySelector(".dropdown-menu");
-    if (
-      dropdownMenu.id !== "favoritesDropdown" &&
-      dropdownMenu.children.length <= 2 &&
-      dropdownMenu.querySelectorAll("hr.dropdown-divider").length === dropdownMenu.children.length
-    ) {
-      if (
-        element.previousElementSibling &&
-        element.previousElementSibling.classList.contains("nav-item") &&
-        element.previousElementSibling.classList.contains("nav-item-separator")
-      ) {
-        element.previousElementSibling.remove();
+
+  document.querySelectorAll(".col-lg-2.col-sm-6").forEach((element) => {
+      const dropdownItems = element.querySelectorAll(".dropdown-item");
+      const items = Array.from(dropdownItems).filter(item => !item.querySelector("hr.dropdown-divider"));
+
+      if (items.length <= 2) {
+          if (
+              element.previousElementSibling &&
+              element.previousElementSibling.classList.contains("col-lg-2") &&
+              element.previousElementSibling.classList.contains("nav-item-separator")
+          ) {
+              element.previousElementSibling.remove();
+          }
+          element.remove();
       }
-      element.remove();
-    }
   });
 
   //Sort languages by alphabet
