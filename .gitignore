@@ -18,8 +18,10 @@ version.properties
 #### Stirling-PDF Files ###
 pipeline/watchedFolders/
 pipeline/finishedFolders/
-customFiles/
-configs/
+#### Stirling-PDF Files ###
+# We want to track our custom configs and customFiles
+# customFiles/
+# configs/
 watchedFolders/
 clientWebUI/
 !cucumber/
