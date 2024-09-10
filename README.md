@@ -1,5 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png" width="80"></p>
-<h1 align="center">Stirling-PDF</h1>
+<h1 align="center">Konfuzio PDF Tools</h1>
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/frooodle/s-pdf)](https://hub.docker.com/r/frooodle/s-pdf)
 [![Discord](https://img.shields.io/discord/1068636748814483718?label=Discord)](https://discord.gg/HYmhKj45pU)
@@ -158,17 +157,179 @@ Stirling-PDF currently supports 39 languages!
 | Vietnamese (Tiếng Việt) (vi_VN)              | ![74%](https://geps.dev/progress/74)   |
 
 
-## Stirling PDF Enterprise
+There are two options for this, either using the generated settings file ``settings.yml``
+This file is located in the ``/configs`` directory and follows standard YAML formatting
 
-Stirling PDF offers an Enterprise edition of its software. This is the same great software but with added features, support and comforts.
-Check out our [Enterprise docs](https://docs.stirlingpdf.com/Enterprise%20Edition)
+Environment variables are also supported and would override the settings file
+For example in the settings.yml you have
 
+```yaml
+security:
+  enableLogin: 'true'
+```
 
-## 🤝 Looking to contribute?
+To have this via an environment variable you would have ``SECURITY_ENABLELOGIN``
 
-Join our community:
-- [Contribution Guidelines](CONTRIBUTING.md)
-- [Translation Guide (How to add custom languages)](HowToAddNewLanguage.md)
-- [Issue Tracker](https://github.com/Stirling-Tools/Stirling-PDF/issues)
-- [Discord Community](https://discord.gg/HYmhKj45pU)
-- [Developer Guide](DeveloperGuide.md)
+The Current list of settings is
+
+```yaml
+security:
+  enableLogin: false # set to 'true' to enable login
+  csrfDisabled: true # Set to 'true' to disable CSRF protection (not recommended for production)
+  loginAttemptCount: 5 # lock user account after 5 tries; when using e.g. Fail2Ban you can deactivate the function with -1
+  loginResetTimeMinutes: 120 # lock account for 2 hours after x attempts
+  loginMethod: all # 'all' (Login Username/Password and OAuth2[must be enabled and configured]), 'normal'(only Login with Username/Password) or 'oauth2'(only Login with OAuth2)
+  initialLogin:
+    username: '' # Initial username for the first login
+    password: '' # Initial password for the first login
+  oauth2:
+    enabled: false # set to 'true' to enable login (Note: enableLogin must also be 'true' for this to work)
+    client:
+      keycloak:
+        issuer: '' # URL of the Keycloak realm's OpenID Connect Discovery endpoint
+        clientId: '' # Client ID for Keycloak OAuth2
+        clientSecret: '' # Client Secret for Keycloak OAuth2
+        scopes: openid, profile, email # Scopes for Keycloak OAuth2
+        useAsUsername: preferred_username # Field to use as the username for Keycloak OAuth2
+      google:
+        clientId: '' # Client ID for Google OAuth2
+        clientSecret: '' # Client Secret for Google OAuth2
+        scopes: https://www.googleapis.com/auth/userinfo.email, https://www.googleapis.com/auth/userinfo.profile # Scopes for Google OAuth2
+        useAsUsername: email # Field to use as the username for Google OAuth2
+      github:
+        clientId: '' # Client ID for GitHub OAuth2
+        clientSecret: '' # Client Secret for GitHub OAuth2
+        scopes: read:user # Scope for GitHub OAuth2
+        useAsUsername: login # Field to use as the username for GitHub OAuth2
+    issuer: '' # set to any provider that supports OpenID Connect Discovery (/.well-known/openid-configuration) end-point
+    clientId: '' # Client ID from your provider
+    clientSecret: '' # Client Secret from your provider
+    autoCreateUser: false # set to 'true' to allow auto-creation of non-existing users
+    blockRegistration: false # set to 'true' to deny login with SSO without prior registration by an admin
+    useAsUsername: email # Default is 'email'; custom fields can be used as the username
+    scopes: openid, profile, email # Specify the scopes for which the application will request permissions
+    provider: google # Set this to your OAuth provider's name, e.g., 'google' or 'keycloak'
+
+system:
+  defaultLocale: 'en-US' # Set the default language (e.g. 'de-DE', 'fr-FR', etc)
+  googlevisibility: false # 'true' to allow Google visibility (via robots.txt), 'false' to disallow
+  enableAlphaFunctionality: false # Set to enable functionality which might need more testing before it fully goes live (This feature might make no changes)
+  showUpdate: true # see when a new update is available
+  showUpdateOnlyAdmin: false # Only admins can see when a new update is available, depending on showUpdate it must be set to 'true'
+  customHTMLFiles: false # enable to have files placed in /customFiles/templates override the existing template html files
+
+ui:
+  appName: '' # Application's visible name
+  homeDescription: '' # Short description or tagline shown on homepage.
+  appNameNavbar: '' # Name displayed on the navigation bar
+
+endpoints:
+  toRemove: [] # List endpoints to disable (e.g. ['img-to-pdf', 'remove-pages'])
+  groupsToRemove: [] # List groups to disable (e.g. ['LibreOffice'])
+
+metrics:
+  enabled: true # 'true' to enable Info APIs (`/api/*`) endpoints, 'false' to disable
+```
+
+There is an additional config file ``/configs/custom_settings.yml`` were users familiar with java and spring application.properties can input their own settings on-top of Stirling-PDFs existing ones
+
+### Extra notes
+
+- Endpoints. Currently, the endpoints ENDPOINTS_TO_REMOVE and GROUPS_TO_REMOVE can include comma separate lists of endpoints and groups to disable as example ENDPOINTS_TO_REMOVE=img-to-pdf,remove-pages would disable both image-to-pdf and remove pages, GROUPS_TO_REMOVE=LibreOffice Would disable all things that use LibreOffice. You can see a list of all endpoints and groups [here](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/Endpoint-groups.md)
+- customStaticFilePath. Customise static files such as the app logo by placing files in the /customFiles/static/ directory. An example of customising app logo is placing a /customFiles/static/favicon.svg to override current SVG. This can be used to change any images/icons/css/fonts/js etc in Stirling-PDF
+
+### Environment only parameters
+
+- ``SYSTEM_ROOTURIPATH`` ie set to ``/pdf-app`` to Set the application's root URI to ``localhost:8080/pdf-app``
+- ``SYSTEM_CONNECTIONTIMEOUTMINUTES`` to set custom connection timeout values
+- ``DOCKER_ENABLE_SECURITY`` to tell docker to download security jar (required as true for auth login)
+- ``INSTALL_BOOK_AND_ADVANCED_HTML_OPS`` to download calibre onto stirling-pdf enabling pdf to/from book and advanced html conversion
+- ``LANGS`` to define custom font libraries to install for use for document conversions
+
+## API
+
+For those wanting to use Stirling-PDFs backend API to link with their own custom scripting to edit PDFs you can view all existing API documentation
+[here](https://app.swaggerhub.com/apis-docs/Stirling-Tools/Stirling-PDF/) or navigate to /swagger-ui/index.html of your stirling-pdf instance for your versions documentation (Or by following the API button in your settings of Stirling-PDF)
+
+## Login authentication
+
+![stirling-login](images/login-light.png)
+
+### Prerequisites
+
+- User must have the folder ./configs volumed within docker so that it is retained during updates.
+- Docker users must download the security jar version by setting ``DOCKER_ENABLE_SECURITY`` to ``true`` in environment variables.
+- Then either enable login via the settings.yml file or via setting ``SECURITY_ENABLE_LOGIN`` to ``true``
+- Now the initial user will be generated with username ``admin`` and password ``stirling``. On login you will be forced to change the password to a new one. You can also use the environment variables ``SECURITY_INITIALLOGIN_USERNAME`` and  ``SECURITY_INITIALLOGIN_PASSWORD`` to set your own straight away (Recommended to remove them after user creation).
+
+Once the above has been done, on restart, a new stirling-pdf-DB.mv.db will show if everything worked.
+
+When you login to Stirling PDF you will be redirected to /login page to login with those default credentials. After login everything should function as normal
+
+To access your account settings go to Account settings in the settings cog menu (top right in navbar) This Account settings menu is also where you find your API key.
+
+To add new users go to the bottom of Account settings and hit 'Admin Settings', here you can add new users. The different roles mentioned within this are for rate limiting. This is a Work in progress which will be expanding on more in future
+
+For API usage you must provide a header with 'X-API-Key' and the associated API key for that user.
+
+## Konfuzio.com Deployment
+
+This repo is publically served via konfuzio.com/tools. A Cloudflare Worker (https://dash.cloudflare.com/c3a4e203bd542436b2abc5f2a93bb812/workers/services/edit/konfuzio-pdf-tools/production) is used to redirect traffic to "/tools".
+
+```
+const myBlog = {
+  hostname: "tools.konfuzio.com",
+  targetSubdirectory: "/tools"
+}
+
+async function handleRequest(request) {
+  const parsedUrl = new URL(request.url);
+  const requestMatches = match => new RegExp(match).test(parsedUrl.pathname);
+  
+  // Create a new URL based on the condition
+  const targetUrl = requestMatches(myBlog.targetSubdirectory) ? 
+                    `https://${myBlog.hostname}${parsedUrl.pathname}` : 
+                    request.url;
+  
+  // Check if the request is a POST request
+  if (request.method === "POST") {
+    // Forward the POST request with its body and headers
+    const response = await fetch(targetUrl, {
+      method: 'POST', // Set method to POST
+      headers: request.headers, // Forward the headers
+      body: request.body // Forward the body
+    });
+    return response;
+  }
+  
+  // For other types of requests (GET, PUT, DELETE, etc.), simply forward the request as is
+  return fetch(targetUrl, {
+    method: request.method, // Use the original request method
+    headers: request.headers // Forward the headers
+  });
+}
+
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request));
+});
+```
+
+## FAQ
+
+### Q1: What are your planned features?
+
+- Progress bar/Tracking
+- Full custom logic pipelines to combine multiple operations together.
+- Folder support with auto scanning to perform operations on
+- Redact text (Via UI not just automated way)
+- Add Forms
+- Multi page layout (Stich PDF pages together) support x rows y columns and custom page sizing
+- Fill forms manually or automatically
+
+### Q2: Why is my application downloading .htm files?
+
+This is an issue caused commonly by your NGINX configuration. The default file upload size for NGINX is 1MB, you need to add the following in your Nginx sites-available file. ``client_max_body_size SIZE;`` Where "SIZE" is 50M for example for 50MB files.
+
+### Q3: Why is my download timing out
+
+NGINX has timeout values by default so if you are running Stirling-PDF behind NGINX you may need to set a timeout value such as adding the config ``proxy_read_timeout 3600;``
