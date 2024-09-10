@@ -115,7 +115,7 @@ jobs:
 =======
           tags: >
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber
-            }}-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
+            }}-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
 >>>>>>> 587a934a (Update push-docker.yml)
       - name: Build and push Dockerfile-ultra-lite
