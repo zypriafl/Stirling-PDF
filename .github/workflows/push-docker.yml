@@ -32,11 +32,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@06832c7b30a0129d7fb559bcc6e43d26f6374244 # v4.3.1
         with:
           gradle-version: 8.12
-          distribution: "temurin"
 
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: 8.7
       - name: Run Gradle Command
         run: ./gradlew clean build
         env:
@@ -76,10 +72,16 @@ jobs:
         with:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+=======
+          tags: >
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=${{github.ref == 'refs/heads/main' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+>>>>>>> 587a934a (Update push-docker.yml)
             type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/main' }}
       - name: Build and push main Dockerfile
         id: build-push-regular
@@ -105,10 +107,17 @@ jobs:
         with:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
+=======
+          tags: >
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber
+            }}-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
+>>>>>>> 587a934a (Update push-docker.yml)
       - name: Build and push Dockerfile-ultra-lite
         id: build-push-lite
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
