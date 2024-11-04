@@ -100,10 +100,16 @@ jobs:
         with:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
+=======
+          tags: >
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber}}-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
+>>>>>>> 1e795959 (Update push-docker.yml)
       - name: Build and push Dockerfile-ultra-lite
         id: build-push-lite
         uses: docker/build-push-action@v6
@@ -128,6 +134,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' }}
@@ -136,6 +143,14 @@ jobs:
         id: build-push-fat
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
         if: github.ref != 'refs/heads/main'
+=======
+          tags: >
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber}}-fat,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
+      - name: Build and push main Dockerfile fat
+        uses: docker/build-push-action@v6
+        if: github.ref == 'refs/heads/master'
+>>>>>>> 1e795959 (Update push-docker.yml)
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
