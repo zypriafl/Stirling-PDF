@@ -20,6 +20,7 @@
               <div class="tool-header">
                 <span class="material-symbols-rounded tool-header-icon advance">construction</span>
                 <span class="tool-header-text" th:text="#{multiTool.header}"></span>
+<<<<<<< HEAD
               </div>
             <div class="mt-action-bar d-flex flex-wrap">
               <div class="mt-filename">
@@ -29,6 +30,42 @@
               <div class="mt-file-uploader">
                 <div
                   th:replace="~{fragments/common :: fileSelector(name='pdf-upload', multipleInputsForSingleRequest=false, accept='image/*, application/pdf', showUploads=false)}">
+=======
+              </div>             
+              <div style="padding-left: 36px"><p th:text="#{home.multiTool.desc}"></p></div>
+              <div class="mt-action-bar d-flex flex-wrap">
+                <div class="mt-filename">
+                  <label for="filename-input" th:text="#{multiTool.uploadPrompts}">Filename</label>
+                  <input type="text" class="form-control" id="filename-input"
+                    th:placeholder="#{multiTool.uploadPrompts}">
+                </div>
+                <div class="mt-action-btn">
+                  <button class="btn btn-primary" onclick="addFiles()">
+                    <span class="material-symbols-rounded">
+                      add
+                    </span>
+                  </button>
+                  <button class="btn btn-secondary enable-on-file" onclick="rotateAll(-90)" disabled>
+                    <span class="material-symbols-rounded">
+                      rotate_left
+                    </span>
+                  </button>
+                  <button class="btn btn-secondary enable-on-file" onclick="rotateAll(90)" disabled>
+                    <span class="material-symbols-rounded">
+                      rotate_right
+                    </span>
+                  </button>
+                  <button class="btn btn-secondary enable-on-file" onclick="splitAll()" disabled>
+                    <span class="material-symbols-rounded">
+                      cut
+                    </span>
+                  </button>
+                  <button id="export-button" class="btn btn-primary enable-on-file" onclick="exportPdf()" disabled>
+                    <span class="material-symbols-rounded">
+                      download
+                    </span>
+                  </button>
+>>>>>>> 7d9cbb68 (Update multi-tool.html)
                 </div>
               </div>
 
