@@ -107,7 +107,7 @@ jobs:
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
 =======
           tags: >
-            type=raw,value=${{ steps.versionNumber.outputs.versionNumber}}-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
 >>>>>>> 1e795959 (Update push-docker.yml)
       - name: Build and push Dockerfile-ultra-lite
@@ -145,7 +145,7 @@ jobs:
         if: github.ref != 'refs/heads/main'
 =======
           tags: >
-            type=raw,value=${{ steps.versionNumber.outputs.versionNumber}}-fat,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
       - name: Build and push main Dockerfile fat
         uses: docker/build-push-action@v6
