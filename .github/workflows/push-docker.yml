@@ -72,10 +72,17 @@ jobs:
         with:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
+=======
+          tags: |
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=${{github.ref == 'refs/heads/main' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/main' }}
+>>>>>>> 7e6fcf69 (Update push-docker.yml)
       - name: Build and push main Dockerfile
         id: build-push-regular
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
@@ -101,12 +108,16 @@ jobs:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
 <<<<<<< HEAD
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/master' }}
 =======
           tags: >
+=======
+          tags: |
+>>>>>>> 7e6fcf69 (Update push-docker.yml)
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
 >>>>>>> 1e795959 (Update push-docker.yml)
@@ -135,6 +146,7 @@ jobs:
           images: |
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
 <<<<<<< HEAD
+<<<<<<< HEAD
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' }}
@@ -145,6 +157,9 @@ jobs:
         if: github.ref != 'refs/heads/main'
 =======
           tags: >
+=======
+          tags: |
+>>>>>>> 7e6fcf69 (Update push-docker.yml)
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
       - name: Build and push main Dockerfile fat
