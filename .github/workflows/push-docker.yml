@@ -66,6 +66,7 @@ jobs:
         id: repoowner
         run: echo "lowercase=$(echo ${{ github.repository_owner }} | awk '{print
           tolower($0)}')" >> $GITHUB_OUTPUT
+      
       - name: Generate tags
         id: meta
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
@@ -76,6 +77,7 @@ jobs:
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+      
       - name: Build and push main Dockerfile
         id: build-push-regular
         uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
@@ -104,6 +106,7 @@ jobs:
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/main' }}
+      
       - name: Build and push Dockerfile-ultra-lite
         id: build-push-lite
         uses: docker/build-push-action@v6
@@ -120,39 +123,3 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           provenance: true
           sbom: true
-
-      - name: Generate tags fat
-        id: meta3
-        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
-        if: github.ref == 'refs/heads/main'
-        with:
-          images: |
-            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
-            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
-          tags: |
-            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/main' }}
-      - name: Build and push main Dockerfile fat
-        id: build-push-fat
-        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
-        if: github.ref == 'refs/heads/main'
-          tags: |
-            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/main' }}
-      - name: Build and push main Dockerfile fat
-        uses: docker/build-push-action@v6
-        if: github.ref == 'refs/heads/main'
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          context: .
-          file: ./Dockerfile.fat
-          push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          tags: ${{ steps.meta3.outputs.tags }}
-          labels: ${{ steps.meta3.outputs.labels }}
-          build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
-          platforms: linux/amd64,linux/arm64/v8
-          provenance: true
-          sbom: true
-
