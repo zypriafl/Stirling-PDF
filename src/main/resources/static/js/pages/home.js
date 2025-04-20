@@ -41,8 +41,8 @@ if (defaultView === 'home-legacy') {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  const surveyVersion = '3.0';
-  const modal = new bootstrap.Modal(document.getElementById('surveyModal'));
+  /* const surveyVersion = '3.0';
+  const modal =takeSurveyButton new bootstrap.Modal(document.getElementById('surveyModal'));
   const dontShowAgain = document.getElementById('dontShowAgain');
   const takeSurveyButton = document.getElementById('takeSurvey');
 
@@ -95,7 +95,7 @@ if (takeSurveyButton) {
 }
   if (localStorage.getItem('dontShowSurvey')) {
     modal.hide();
-  }
+  } */
 
   if (window.location.pathname === '/') {
     const navItem = document.getElementById('navItemToHide');
