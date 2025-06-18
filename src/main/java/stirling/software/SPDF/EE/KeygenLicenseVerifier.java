@@ -53,34 +53,34 @@ public class KeygenLicenseVerifier {
     }
 
     public License verifyLicense(String licenseKeyOrCert) {
-    	License license;
+        License license;
 
-    	if (isCertificateLicense(licenseKeyOrCert)) {
-    	    log.info("Detected certificate-based license. Processing...");
-    	    boolean isValid = verifyCertificateLicense(licenseKeyOrCert);
-    	    if (isValid) {
-    	        license = isEnterpriseLicense ? License.ENTERPRISE : License.PRO;
-    	    } else {
-    	        license = License.NORMAL;
-    	    }
-    	} else if (isJWTLicense(licenseKeyOrCert)) {
-    	    log.info("Detected JWT-style license key. Processing...");
-    	    boolean isValid = verifyJWTLicense(licenseKeyOrCert);
-    	    if (isValid) {
-    	        license = isEnterpriseLicense ? License.ENTERPRISE : License.PRO;
-    	    } else {
-    	        license = License.NORMAL;
-    	    }
-    	} else {
-    	    log.info("Detected standard license key. Processing...");
-    	    boolean isValid = verifyStandardLicense(licenseKeyOrCert);
-    	    if (isValid) {
-    	        license = isEnterpriseLicense ? License.ENTERPRISE : License.PRO;
-    	    } else {
-    	        license = License.NORMAL;
-    	    }
-    	}
-    	return license;
+        if (isCertificateLicense(licenseKeyOrCert)) {
+            log.info("Detected certificate-based license. Processing...");
+            boolean isValid = verifyCertificateLicense(licenseKeyOrCert);
+            if (isValid) {
+                license = isEnterpriseLicense ? License.ENTERPRISE : License.PRO;
+            } else {
+                license = License.NORMAL;
+            }
+        } else if (isJWTLicense(licenseKeyOrCert)) {
+            log.info("Detected JWT-style license key. Processing...");
+            boolean isValid = verifyJWTLicense(licenseKeyOrCert);
+            if (isValid) {
+                license = isEnterpriseLicense ? License.ENTERPRISE : License.PRO;
+            } else {
+                license = License.NORMAL;
+            }
+        } else {
+            log.info("Detected standard license key. Processing...");
+            boolean isValid = verifyStandardLicense(licenseKeyOrCert);
+            if (isValid) {
+                license = isEnterpriseLicense ? License.ENTERPRISE : License.PRO;
+            } else {
+                license = License.NORMAL;
+            }
+        }
+        return license;
     }
 
     private boolean isEnterpriseLicense = false;
@@ -193,7 +193,6 @@ public class KeygenLicenseVerifier {
 
     private boolean processCertificateData(String certData) {
         try {
-
 
             JSONObject licenseData = new JSONObject(certData);
             JSONObject metaObj = licenseData.optJSONObject("meta");
@@ -390,7 +389,7 @@ public class KeygenLicenseVerifier {
                 // Extract max users and isEnterprise from policy or metadata
                 int users = policyObj.optInt("users", 0);
                 isEnterpriseLicense = policyObj.optBoolean("isEnterprise", false);
-                
+
                 if (users > 0) {
                     applicationProperties.getPremium().setMaxUsers(users);
                     log.info("License allows for {} users", users);
@@ -402,7 +401,7 @@ public class KeygenLicenseVerifier {
                         users = metadata.optInt("users", 1);
                         applicationProperties.getPremium().setMaxUsers(users);
                         log.info("License allows for {} users (from metadata)", users);
-                        
+
                         // Check for isEnterprise flag in metadata
                         isEnterpriseLicense = metadata.optBoolean("isEnterprise", false);
                     } else {
@@ -411,7 +410,6 @@ public class KeygenLicenseVerifier {
                         log.info("Using default of 1 user for license");
                     }
                 }
-               
             }
 
             return true;
@@ -507,16 +505,16 @@ public class KeygenLicenseVerifier {
                             .path("users")
                             .asInt(0);
             applicationProperties.getPremium().setMaxUsers(users);
-            
+
             // Extract isEnterprise flag
-            isEnterpriseLicense = 
+            isEnterpriseLicense =
                     jsonResponse
                             .path("data")
                             .path("attributes")
                             .path("metadata")
                             .path("isEnterprise")
                             .asBoolean(false);
-            
+
             log.info(applicationProperties.toString());
 
         } else {
