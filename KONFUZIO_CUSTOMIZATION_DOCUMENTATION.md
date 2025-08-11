@@ -43,7 +43,7 @@ This document details all customizations made to transform Stirling-PDF v1.2.0 i
 2. **Terms & Conditions** (`/terms`)
    - Complete terms of service
    - Service description and user responsibilities
-   - Intellectual property (mentions Stirling-PDF GPL-3.0 license)
+   - Intellectual property (mentions Stirling-PDF MIT license)
    - Governing law (Germany)
    - Helm & Nagel GmbH contact information
 
