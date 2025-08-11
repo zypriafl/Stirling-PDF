@@ -171,11 +171,7 @@
 
   <!-- Pixel, doesn't collect any PII-->
   <img th:if="${!@disablePixel}" referrerpolicy="no-referrer-when-downgrade"
-             th:src="'#'" 
-             + '&machineType=' + ${@machineType} 
-             + '&appVersion=' + ${@appVersion} 
-             + '&licenseType=' + ${@license} 
-             + '&loginEnabled=' + ${@loginEnabled}"
+             th:src="'#'"
      style="position: absolute; visibility: hidden;" />
      
   <!-- Custom -->
