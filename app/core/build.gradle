@@ -49,7 +49,7 @@ dependencies {
     if (System.getenv('DISABLE_ADDITIONAL_FEATURES') != 'true'
         || (project.hasProperty('DISABLE_ADDITIONAL_FEATURES')
         && System.getProperty('DISABLE_ADDITIONAL_FEATURES') != 'true')) {
-        implementation project(':proprietary')
+
     }
 
     implementation project(':common')
@@ -164,4 +164,4 @@ springBoot {
 }
 
 bootJar.dependsOn ':common:jar'
-bootJar.dependsOn ':proprietary:jar'
+

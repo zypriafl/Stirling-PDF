@@ -183,7 +183,7 @@ subprojects {
 
         tasks.named("forkedSpringBootRun") {
             dependsOn(":common:jar")
-            dependsOn(":proprietary:jar")
+
         }
 
         tasks.register("copySwaggerDoc", Copy) {
@@ -578,7 +578,7 @@ dependencies {
     if (System.getenv('DISABLE_ADDITIONAL_FEATURES') != 'true'
         || (project.hasProperty('DISABLE_ADDITIONAL_FEATURES')
         && System.getProperty('DISABLE_ADDITIONAL_FEATURES') != 'true')) {
-        implementation project(':proprietary')
+
     }
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
