@@ -67,6 +67,7 @@ jobs:
 
       - name: Login to Docker Hub
         uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3.5.0
+        if: github.repository == 'Stirling-Tools/Stirling-PDF'
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_API }}
@@ -142,15 +143,29 @@ jobs:
           provenance: true
           sbom: true
 
-      - name: Generate tags fat
+      - name: Generate tags fat (original repo)
         id: meta3
         uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
+        if: github.repository == 'Stirling-Tools/Stirling-PDF'
         with:
           images: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/s-pdf
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
             ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/stirling-pdf
+          tags: |
+            type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=alpha,enable=${{ github.ref == 'refs/heads/main' }}
+
+      - name: Generate tags fat (fork)
+        id: meta3-fork
+        uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5.8.0
+        if: github.repository != 'Stirling-Tools/Stirling-PDF'
+        with:
+          images: |
+            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
+            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' }}
@@ -166,8 +181,8 @@ jobs:
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: ${{ steps.meta3.outputs.tags }}
-          labels: ${{ steps.meta3.outputs.labels }}
+          tags: ${{ github.repository == 'Stirling-Tools/Stirling-PDF' && steps.meta3.outputs.tags || steps.meta3-fork.outputs.tags }}
+          labels: ${{ github.repository == 'Stirling-Tools/Stirling-PDF' && steps.meta3.outputs.labels || steps.meta3-fork.outputs.labels }}
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
           platforms: linux/amd64,linux/arm64/v8
           provenance: true
