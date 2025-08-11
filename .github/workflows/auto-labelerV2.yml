@@ -9,6 +9,7 @@ permissions:
 jobs:
   labeler:
     runs-on: ubuntu-latest
+    if: github.repository == 'Stirling-Tools/Stirling-PDF'
     permissions:
       pull-requests: write
     steps:

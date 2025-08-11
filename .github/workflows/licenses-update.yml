@@ -25,6 +25,7 @@ permissions:
 jobs:
   generate-license-report:
     runs-on: ubuntu-latest
+    if: github.repository == 'Stirling-Tools/Stirling-PDF'
     permissions:
       contents: write
       pull-requests: write
