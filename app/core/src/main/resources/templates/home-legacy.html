@@ -55,19 +55,7 @@
 
         <div class="features-container">
 
-          <div th:if="${@shouldShow}" class="feature-card favorite update-notice visually-hidden" id="update-link-legacy">
-            <a href="https://github.com/Stirling-Tools/Stirling-PDF/releases" target="_blank" rel="noopener">
-              <div class="d-flex align-items-center">
-                <div id="tool-icon" class="advance" alt="icon">
-                  <span class="material-symbols-rounded nav-icon">update</span>
-                </div>
-                <div id="tool-text">
-                  <h5 class="card-title" th:text="#{settings.update}"></h5>
-                  <p class="card-text" id="app-update"></p>
-                </div>
-              </div>
-            </a>
-          </div>
+
 
           <div id="groupFavorites" class="feature-group-legacy">
             <div
