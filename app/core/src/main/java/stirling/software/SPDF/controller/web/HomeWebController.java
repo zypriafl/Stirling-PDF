@@ -80,6 +80,20 @@ public class HomeWebController {
         return "redirect:/";
     }
 
+    @GetMapping("/privacy-policy")
+    @Hidden
+    public String privacyPolicy(Model model) {
+        model.addAttribute("currentPage", "privacy-policy");
+        return "privacy-policy";
+    }
+
+    @GetMapping("/terms")
+    @Hidden
+    public String termsAndConditions(Model model) {
+        model.addAttribute("currentPage", "terms");
+        return "terms";
+    }
+
     @GetMapping(value = "/robots.txt", produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseBody
     @Hidden

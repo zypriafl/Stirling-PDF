@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <th:block th:insert="~{fragments/common :: head(title='Terms and Conditions - Konfuzio Tools', header='Terms and Conditions')}"></th:block>
+  </head>
+
+  <body>
+    <div id="page-container">
+      <div id="content-wrap">
+        <th:block th:insert="~{fragments/navbar.html :: navbar}"></th:block>
+        <br><br>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-10 bg-card">
+              <div class="tool-header">
+                <span class="material-symbols-rounded tool-header-icon organize">description</span>
+                <span class="tool-header-text">Terms and Conditions</span>
+              </div>
+              
+              <div class="mt-4">
+                <h2>Terms and Conditions for Konfuzio Tools</h2>
+                <p><strong>Last updated:</strong> August 11, 2024</p>
+                
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using Konfuzio Tools, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+                
+                <h3>2. Description of Service</h3>
+                <p>Konfuzio Tools provides PDF processing and manipulation services including but not limited to:</p>
+                <ul>
+                  <li>PDF conversion and formatting</li>
+                  <li>Document merging and splitting</li>
+                  <li>Image extraction and manipulation</li>
+                  <li>Text extraction and OCR</li>
+                  <li>Document compression and optimization</li>
+                  <li>Security features and encryption</li>
+                </ul>
+                
+                <h3>3. User Responsibilities</h3>
+                <p>As a user of Konfuzio Tools, you agree to:</p>
+                <ul>
+                  <li>Use the service only for lawful purposes</li>
+                  <li>Not upload malicious files or attempt to harm the service</li>
+                  <li>Respect intellectual property rights</li>
+                  <li>Not use the service for spam or harassment</li>
+                  <li>Comply with all applicable laws and regulations</li>
+                </ul>
+                
+                <h3>4. Privacy and Data Protection</h3>
+                <p>Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the service, to understand our practices.</p>
+                
+                <h3>5. Intellectual Property</h3>
+                <p>Konfuzio Tools is based on Stirling-PDF, which is licensed under GPL-3.0. Our modifications and branding are owned by Helm & Nagel GmbH. You retain all rights to your uploaded documents.</p>
+                
+                <h3>6. Service Availability</h3>
+                <p>We strive to maintain high availability but do not guarantee uninterrupted service. We may temporarily suspend the service for maintenance or updates.</p>
+                
+                <h3>7. Limitation of Liability</h3>
+                <p>Helm & Nagel GmbH shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service.</p>
+                
+                <h3>8. Disclaimer of Warranties</h3>
+                <p>The service is provided "as is" without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability and fitness for a particular purpose.</p>
+                
+                <h3>9. Indemnification</h3>
+                <p>You agree to indemnify and hold harmless Helm & Nagel GmbH from any claims, damages, or expenses arising from your use of the service.</p>
+                
+                <h3>10. Termination</h3>
+                <p>We may terminate or suspend your access to the service immediately, without prior notice, for any reason, including breach of these terms.</p>
+                
+                <h3>11. Governing Law</h3>
+                <p>These terms shall be governed by and construed in accordance with the laws of Germany, without regard to its conflict of law provisions.</p>
+                
+                <h3>12. Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this page.</p>
+                
+                <h3>13. Severability</h3>
+                <p>If any provision of these terms is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that the terms will otherwise remain in full force and effect.</p>
+                
+                <h3>14. Contact Information</h3>
+                <p>If you have any questions about these terms, please contact us:</p>
+                <div class="contact-info">
+                  <p><strong>Helm & Nagel GmbH</strong><br>
+                  Rosenweg 5<br>
+                  35614 Aßlar<br>
+                  Deutschland</p>
+                  <p><strong>E-Mail:</strong> <a href="mailto:info@helm-nagel.com">info@helm-nagel.com</a></p>
+                </div>
+                
+                <h3>15. Open Source License</h3>
+                <p>Konfuzio Tools is based on Stirling-PDF, which is licensed under the GNU General Public License v3.0. The full license text can be found at <a href="https://github.com/Stirling-Tools/Stirling-PDF/blob/main/LICENSE" target="_blank">https://github.com/Stirling-Tools/Stirling-PDF/blob/main/LICENSE</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <th:block th:insert="~{fragments/footer.html :: footer}"></th:block>
+    </div>
+  </body>
+</html>
