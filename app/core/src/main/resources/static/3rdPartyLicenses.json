@@ -4,7 +4,7 @@
             "moduleName": "Stirling-PDF",
             "moduleUrl": "https://github.com/Stirling-Tools/Stirling-PDF",
             "moduleVersion": "1.2.0",
-            "moduleLicense": "GPL-3.0",
+            "moduleLicense": "MIT",
             "moduleLicenseUrl": "https://github.com/Stirling-Tools/Stirling-PDF/blob/main/LICENSE"
         },
         {

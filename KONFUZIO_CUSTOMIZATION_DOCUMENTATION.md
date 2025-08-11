@@ -198,15 +198,16 @@ app/
 ## 🔒 **License Compliance**
 
 ### Open Source Attribution
-- **Base Project:** Stirling-PDF v1.2.0 (GPL-3.0)
+- **Base Project:** Stirling-PDF v1.2.0 (MIT License)
 - **Modifications:** Helm & Nagel GmbH
 - **License Text:** Available at `/terms` page
 - **Third-Party Licenses:** Acknowledged in `/licenses` page
 
-### GPL-3.0 Compliance
-- **Source Code:** Available upon request
+### MIT License Compliance
+- **Source Code:** Available in Git repository
 - **Modifications:** Documented in this file
 - **Attribution:** Properly credited in terms and licenses pages
+- **Original License:** Preserved in LICENSE file
 
 ---
 
