@@ -91,7 +91,7 @@ system:
   showUpdateOnlyAdmin: false # only admins can see when a new update is available, depending on showUpdate it must be set to 'true'
   customHTMLFiles: true # enable to have files placed in /customFiles/templates override the existing template HTML files
   tessdataDir: /usr/share/tessdata # path to the directory containing the Tessdata files. This setting is relevant for Windows systems. For Windows users, this path should be adjusted to point to the appropriate directory where the Tessdata files are stored.
-  enableAnalytics: null # set to 'true' to enable analytics, set to 'false' to disable analytics; for enterprise users, this is set to true
+  enableAnalytics: false # set to 'true' to enable analytics, set to 'false' to disable analytics; for enterprise users, this is set to true
   enableUrlToPDF: false # Set to 'true' to enable URL to PDF, INTERNAL ONLY, known security issues, should not be used externally
   disableSanitize: false # set to true to disable Sanitize HTML; (can lead to injections in HTML)
   datasource:
