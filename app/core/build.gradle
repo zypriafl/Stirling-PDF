@@ -164,4 +164,3 @@ springBoot {
 }
 
 bootJar.dependsOn ':common:jar'
-
