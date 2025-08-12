@@ -4,6 +4,7 @@
 
 <head>
   <th:block th:insert="~{fragments/common :: head(title=#{merge.title}, header=#{merge.header})}"></th:block>
+  <meta name="description" th:content="#{merge.metaDescription}">
   <link rel="stylesheet" th:href="@{'/css/merge.css'}">
 </head>
 
@@ -18,7 +19,10 @@
           <div class="col-md-6 bg-card">
             <div class="tool-header">
               <span class="material-symbols-rounded tool-header-icon organize">add_to_photos</span>
-              <span class="tool-header-text" th:text="#{merge.header}"></span>
+              <h1 class="tool-header-text" th:text="#{merge.header}"></h1>
+            </div>
+            <div class="seo-content mb-4">
+              <p th:text="#{merge.seoDescription}"></p>
             </div>
             <div><p th:text="#{home.merge.desc}"></p></div>
             <form th:action="@{'api/v1/general/merge-pdfs'}" method="post" enctype="multipart/form-data">
@@ -28,6 +32,7 @@
                   th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=true, accept='application/pdf')}">
                 </div>
               </div>
+              <h2 class="h5 mb-3">Merge Options</h2>
               <div class="mb-3">
                 <input type="checkbox" name="removeCertSign" id="removeCertSign">
                 <label for="removeCertSign" th:text="#{merge.removeCertSign}">Remove digital signature in the merged
