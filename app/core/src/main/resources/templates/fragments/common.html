@@ -4,7 +4,7 @@
 
   <!-- Metadata -->
   <meta charset="utf-8">
-  <meta name="description" th:content="${@appName} + (${header} != null and ${header} != '' ? ' - ' + ${header} : '')">
+  <meta name="description" th:content="${metaDescription != null ? metaDescription : @appName + (${header} != null and ${header} != '' ? ' - ' + ${header} : '')}">
   <meta name="msapplication-TileColor" content="#2d89ef">
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

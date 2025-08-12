@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{pdfToImage.title}, header=#{pdfToImage.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{pdfToImage.title}, header=#{pdfToImage.header}, metaDescription=#{pdfToImage.metaDescription})}"></th:block>
   <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
       const maxDPI = /*[[${maxDPI}]]*/ 500; // Maximum DPI for PDF to image conversion
@@ -32,7 +32,10 @@
           <div class="col-md-6 bg-card">
             <div class="tool-header">
               <span class="material-symbols-rounded tool-header-icon convert">photo_library</span>
-              <span class="tool-header-text" th:text="#{pdfToImage.header}"></span>
+              <h1 class="tool-header-text" th:text="#{pdfToImage.header}"></h1>
+            </div>
+            <div class="seo-content mb-4">
+              <p th:text="#{pdfToImage.seoDescription}"></p>
             </div>
             <p th:text="#{processTimeWarning}"></p>
             <p th:if="${!isPython}" th:text="#{pdfToImage.info}">Python is not installed. Required for WebP conversion.
@@ -41,6 +44,7 @@
               <div
                 th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf')}">
               </div>
+              <h2 class="h5 mb-3">Conversion Settings</h2>
               <div class="mb-3">
                 <label th:text="#{pdfToImage.selectText}"></label>
                 <select class="form-control" name="imageFormat">
