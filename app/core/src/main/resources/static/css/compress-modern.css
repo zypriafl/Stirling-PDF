@@ -26,10 +26,14 @@
 
 /* Hero Section */
 .hero-section {
-  background: var(--compress-hero-bg);
-  color: white;
+  background: var(--compress-hero-bg) !important;
+  color: white !important;
   position: relative;
   overflow: hidden;
+}
+
+.hero-section * {
+  color: white !important;
 }
 
 .hero-section::before {
