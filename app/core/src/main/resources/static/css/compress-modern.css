@@ -14,14 +14,14 @@
 
 /* Dark mode overrides */
 [data-bs-theme="dark"] {
-  --compress-hero-bg: linear-gradient(135deg, var(--bs-primary, #0d6efd) 0%, rgba(13, 110, 253, 0.9) 100%);
-  --compress-card-bg: #212529;
-  --compress-card-border: #495057;
-  --compress-text-primary: #ffffff;
-  --compress-text-muted: #adb5bd;
-  --compress-shadow: rgba(255, 255, 255, 0.1);
-  --compress-shadow-hover: rgba(13, 110, 253, 0.25);
-  --compress-features-bg: #1a1d20;
+  --compress-hero-bg: var(--bs-body-bg, #212529);
+  --compress-card-bg: var(--bs-gray-800, #343a40);
+  --compress-card-border: var(--bs-gray-700, #495057);
+  --compress-text-primary: var(--bs-body-color, #ffffff);
+  --compress-text-muted: var(--bs-gray-300, #adb5bd);
+  --compress-shadow: rgba(0, 0, 0, 0.3);
+  --compress-shadow-hover: rgba(13, 110, 253, 0.4);
+  --compress-features-bg: var(--bs-gray-900, #1a1d20);
 }
 
 /* Hero Section */
@@ -65,6 +65,12 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+}
+
+/* Dark mode stat icons */
+[data-bs-theme="dark"] .stat-icon {
+  background: rgba(13, 110, 253, 0.2);
+  border: 1px solid rgba(13, 110, 253, 0.3);
 }
 
 .stat-icon .material-symbols-rounded {
@@ -159,6 +165,22 @@
 
 .option-card.active::before {
   transform: scaleX(1);
+}
+
+/* Dark mode option cards */
+[data-bs-theme="dark"] .option-card {
+  background: var(--bs-gray-800, #343a40);
+  border-color: var(--bs-gray-700, #495057);
+}
+
+[data-bs-theme="dark"] .option-card:hover {
+  background: var(--bs-gray-700, #495057);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+[data-bs-theme="dark"] .option-card.active {
+  background: var(--bs-gray-700, #495057);
+  border-color: var(--bs-primary);
 }
 
 .option-header {
@@ -305,6 +327,17 @@
 .upload-zone:hover {
   border-color: var(--bs-primary);
   background: var(--bs-primary-bg-subtle, rgba(13, 110, 253, 0.1));
+}
+
+/* Dark mode upload zone */
+[data-bs-theme="dark"] .upload-zone {
+  background: var(--bs-gray-800, #343a40);
+  border-color: var(--bs-gray-600, #6c757d);
+}
+
+[data-bs-theme="dark"] .upload-zone:hover {
+  background: rgba(13, 110, 253, 0.15);
+  border-color: var(--bs-primary);
 }
 
 /* Responsive Design */
