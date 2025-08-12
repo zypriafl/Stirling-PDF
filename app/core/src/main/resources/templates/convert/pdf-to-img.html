@@ -3,7 +3,8 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{pdfToImage.title}, header=#{pdfToImage.header}, metaDescription=#{pdfToImage.metaDescription})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{pdfToImage.title}, header=#{pdfToImage.header})}"></th:block>
+  <meta name="description" th:content="#{pdfToImage.metaDescription}">
   <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
       const maxDPI = /*[[${maxDPI}]]*/ 500; // Maximum DPI for PDF to image conversion
