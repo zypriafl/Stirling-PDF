@@ -1,8 +1,30 @@
 /* Modern Compress PDF Page Styles */
 
+/* CSS Custom Properties for Theme Support */
+:root {
+  --compress-hero-bg: linear-gradient(135deg, var(--bs-primary, #0d6efd) 0%, rgba(13, 110, 253, 0.8) 100%);
+  --compress-card-bg: var(--bs-body-bg, #ffffff);
+  --compress-card-border: var(--bs-border-color, #dee2e6);
+  --compress-text-primary: var(--bs-body-color, #212529);
+  --compress-text-muted: var(--bs-secondary-color, #6c757d);
+  --compress-shadow: rgba(0, 0, 0, 0.1);
+  --compress-shadow-hover: rgba(13, 110, 253, 0.15);
+}
+
+/* Dark mode overrides */
+[data-bs-theme="dark"] {
+  --compress-hero-bg: linear-gradient(135deg, var(--bs-primary, #0d6efd) 0%, rgba(13, 110, 253, 0.9) 100%);
+  --compress-card-bg: var(--bs-body-bg, #212529);
+  --compress-card-border: var(--bs-border-color, #495057);
+  --compress-text-primary: var(--bs-body-color, #ffffff);
+  --compress-text-muted: var(--bs-secondary-color, #adb5bd);
+  --compress-shadow: rgba(255, 255, 255, 0.1);
+  --compress-shadow-hover: rgba(13, 110, 253, 0.25);
+}
+
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, var(--bs-primary-rgb, 13, 110, 253) 0%, rgba(13, 110, 253, 0.8) 100%);
+  background: var(--compress-hero-bg);
   color: white;
   position: relative;
   overflow: hidden;
@@ -46,10 +68,12 @@
 .stat-number {
   font-weight: 700;
   color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .stat-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
 /* Tool Steps */
@@ -84,14 +108,15 @@
 }
 
 .option-card {
-  background: white;
-  border: 2px solid #e9ecef;
+  background: var(--compress-card-bg);
+  border: 2px solid var(--compress-card-border);
   border-radius: 12px;
   padding: 1.5rem;
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  color: var(--compress-text-primary);
 }
 
 .option-card::before {
@@ -108,13 +133,14 @@
 
 .option-card:hover {
   border-color: var(--bs-primary);
-  box-shadow: 0 8px 25px rgba(13, 110, 253, 0.15);
+  box-shadow: 0 8px 25px var(--compress-shadow-hover);
   transform: translateY(-2px);
 }
 
 .option-card.active {
   border-color: var(--bs-primary);
-  background: linear-gradient(135deg, rgba(13, 110, 253, 0.05), rgba(13, 110, 253, 0.02));
+  background: var(--compress-card-bg);
+  box-shadow: 0 4px 20px var(--compress-shadow-hover);
 }
 
 .option-card.active::before {
@@ -142,29 +168,31 @@
 
 /* Custom Settings Panel */
 .custom-settings {
-  background: #f8f9fa;
+  background: var(--bs-secondary-bg, #f8f9fa);
   border-radius: 8px;
   padding: 1.5rem;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--compress-card-border);
   margin-top: 1rem;
 }
 
 .form-select, .form-control {
   border-radius: 8px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--compress-card-border);
   padding: 0.75rem 1rem;
   transition: all 0.2s ease;
+  background: var(--compress-card-bg);
+  color: var(--compress-text-primary);
 }
 
 .form-select:focus, .form-control:focus {
   border-color: var(--bs-primary);
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  box-shadow: 0 0 0 0.2rem var(--compress-shadow-hover);
 }
 
 /* Additional Options */
 .additional-options {
-  background: white;
-  border: 1px solid #e9ecef;
+  background: var(--compress-card-bg);
+  border: 1px solid var(--compress-card-border);
   border-radius: 12px;
   padding: 1.5rem;
 }
@@ -185,7 +213,7 @@
 
 .option-title {
   font-weight: 600;
-  color: #212529;
+  color: var(--compress-text-primary);
   margin-bottom: 0.25rem;
 }
 
@@ -215,7 +243,7 @@
 
 /* Features Section */
 .features-section {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: var(--bs-secondary-bg, #f8f9fa);
 }
 
 .feature-item {
@@ -230,19 +258,20 @@
 
 .feature-item h3 {
   font-weight: 600;
-  color: #212529;
+  color: var(--compress-text-primary);
   margin-bottom: 1rem;
 }
 
 .feature-item p {
   line-height: 1.6;
   font-size: 0.95rem;
+  color: var(--compress-text-muted);
 }
 
 /* Upload Zone Styling */
 .upload-zone {
-  background: white;
-  border: 2px dashed #dee2e6;
+  background: var(--compress-card-bg);
+  border: 2px dashed var(--compress-card-border);
   border-radius: 12px;
   padding: 2rem;
   text-align: center;
@@ -251,7 +280,7 @@
 
 .upload-zone:hover {
   border-color: var(--bs-primary);
-  background: rgba(13, 110, 253, 0.02);
+  background: var(--bs-primary-bg-subtle, rgba(13, 110, 253, 0.1));
 }
 
 /* Responsive Design */
@@ -277,29 +306,6 @@
     width: 35px;
     height: 35px;
     font-size: 1rem;
-  }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .option-card {
-    background: var(--bs-dark, #212529);
-    border-color: var(--bs-secondary, #6c757d);
-    color: var(--bs-light, #f8f9fa);
-  }
-  
-  .custom-settings {
-    background: rgba(255, 255, 255, 0.05);
-  }
-  
-  .additional-options {
-    background: var(--bs-dark, #212529);
-    border-color: var(--bs-secondary, #6c757d);
-  }
-  
-  .upload-zone {
-    background: var(--bs-dark, #212529);
-    border-color: var(--bs-secondary, #6c757d);
   }
 }
 
