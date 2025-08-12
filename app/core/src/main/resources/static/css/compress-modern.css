@@ -3,23 +3,25 @@
 /* CSS Custom Properties for Theme Support */
 :root {
   --compress-hero-bg: linear-gradient(135deg, var(--bs-primary, #0d6efd) 0%, rgba(13, 110, 253, 0.8) 100%);
-  --compress-card-bg: var(--bs-body-bg, #ffffff);
-  --compress-card-border: var(--bs-border-color, #dee2e6);
-  --compress-text-primary: var(--bs-body-color, #212529);
-  --compress-text-muted: var(--bs-secondary-color, #6c757d);
+  --compress-card-bg: #ffffff;
+  --compress-card-border: #dee2e6;
+  --compress-text-primary: #212529;
+  --compress-text-muted: #6c757d;
   --compress-shadow: rgba(0, 0, 0, 0.1);
   --compress-shadow-hover: rgba(13, 110, 253, 0.15);
+  --compress-features-bg: #f8f9fa;
 }
 
 /* Dark mode overrides */
 [data-bs-theme="dark"] {
   --compress-hero-bg: linear-gradient(135deg, var(--bs-primary, #0d6efd) 0%, rgba(13, 110, 253, 0.9) 100%);
-  --compress-card-bg: var(--bs-body-bg, #212529);
-  --compress-card-border: var(--bs-border-color, #495057);
-  --compress-text-primary: var(--bs-body-color, #ffffff);
-  --compress-text-muted: var(--bs-secondary-color, #adb5bd);
+  --compress-card-bg: #212529;
+  --compress-card-border: #495057;
+  --compress-text-primary: #ffffff;
+  --compress-text-muted: #adb5bd;
   --compress-shadow: rgba(255, 255, 255, 0.1);
   --compress-shadow-hover: rgba(13, 110, 253, 0.25);
+  --compress-features-bg: #1a1d20;
 }
 
 /* Hero Section */
@@ -84,6 +86,11 @@
 
 .step-header {
   margin-bottom: 1.5rem;
+}
+
+.step-header h2 {
+  color: var(--compress-text-primary);
+  font-weight: 600;
 }
 
 .step-number {
@@ -151,6 +158,15 @@
   width: 100%;
 }
 
+.option-header h3 {
+  color: var(--compress-text-primary);
+  font-weight: 600;
+}
+
+.option-header p {
+  color: var(--compress-text-muted);
+}
+
 .form-check-input {
   width: 1.2em;
   height: 1.2em;
@@ -168,7 +184,7 @@
 
 /* Custom Settings Panel */
 .custom-settings {
-  background: var(--bs-secondary-bg, #f8f9fa);
+  background: var(--compress-features-bg);
   border-radius: 8px;
   padding: 1.5rem;
   border-top: 1px solid var(--compress-card-border);
@@ -220,6 +236,7 @@
 .option-description {
   font-size: 0.875rem;
   line-height: 1.4;
+  color: var(--compress-text-muted);
 }
 
 /* Action Button */
@@ -243,7 +260,7 @@
 
 /* Features Section */
 .features-section {
-  background: var(--bs-secondary-bg, #f8f9fa);
+  background: var(--compress-features-bg);
 }
 
 .feature-item {
