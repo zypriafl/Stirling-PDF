@@ -21,13 +21,17 @@
   --compress-text-muted: var(--bs-gray-300, #adb5bd);
   --compress-shadow: rgba(0, 0, 0, 0.3);
   --compress-shadow-hover: rgba(13, 110, 253, 0.4);
-  --compress-features-bg: var(--bs-gray-900, #1a1d20);
+  --compress-features-bg: var(--bs-body-bg, #212529);
 }
 
 /* Hero Section */
 .hero-section {
-  background: var(--compress-card-bg);
-  border-bottom: 1px solid var(--compress-card-border);
+  background: var(--compress-hero-bg);
+}
+
+/* Dark mode - remove border to avoid zebra effect */
+[data-bs-theme="dark"] .hero-section {
+  border-bottom: none;
 }
 
 .hero-content h1 {
