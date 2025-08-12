@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -101,7 +102,8 @@ public class AppConfig {
 
     @Bean(name = "languages")
     public List<String> languages() {
-        return applicationProperties.getUi().getLanguages();
+        List<String> languages = applicationProperties.getUi().getLanguages();
+        return languages != null ? languages : new ArrayList<>();
     }
 
     @Bean

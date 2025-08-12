@@ -116,7 +116,9 @@ ui:
   appName: Konfuzio PDF Tools # application's visible name
   homeDescription: PDF Tools from Konfuzio # short description or tagline shown on the homepage
   appNameNavbar: Konfuzio # name displayed on the navigation bar
-  languages: ["de_DE", "en_US"] # If empty, all languages are enabled. To display only German and Polish ["de_DE", "pl_PL"]. British English is always enabled.
+  languages: # If empty, all languages are enabled. To display only German and Polish ["de_DE", "pl_PL"]. British English is always enabled.
+    - "de_DE"
+    - "en_US"
 
 endpoints:
   toRemove: [] # list endpoints to disable (e.g. ['img-to-pdf', 'remove-pages'])
