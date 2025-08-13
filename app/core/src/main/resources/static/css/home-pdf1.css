@@ -235,7 +235,16 @@ body {
 .feature-rows {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
+}
+
+/* Feature groups */
+.feature-group {
+  margin-bottom: 2rem;
+}
+
+.feature-group:last-child {
+  margin-bottom: 0;
 }
 
 /* Tool Cards Styling */
@@ -254,7 +263,7 @@ body {
 }
 
 /* Individual tool card styling */
-.navbar-entry {
+.dropdown-item {
   background: white;
   border: 1px solid #e9ecef;
   border-radius: 12px;
@@ -266,9 +275,10 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.navbar-entry:hover {
+.dropdown-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   text-decoration: none;
@@ -276,27 +286,43 @@ body {
   border-color: #667eea;
 }
 
-.navbar-entry .material-symbols-rounded {
+.dropdown-item .nav-icon {
   font-size: 2rem;
   color: #667eea;
   flex-shrink: 0;
 }
 
-.navbar-entry .tool-text {
+.dropdown-item .icon-text {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
   flex: 1;
 }
 
-.navbar-entry .tool-title {
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: #333;
+/* Feature group headers */
+.feature-group-header {
+  margin-bottom: 1.5rem;
 }
 
-.navbar-entry .tool-description {
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.4;
+.feature-group-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+  display: inline-block;
+}
+
+/* Override menu-title styling */
+.menu-title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  margin: 0 !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 2px solid #667eea !important;
+  display: inline-block !important;
 }
 
 /* Feature group headers */
