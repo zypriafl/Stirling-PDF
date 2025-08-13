@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}"
+  xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <th:block th:insert="~{fragments/common :: head(title='')}"></th:block>
+  <link rel="stylesheet" th:href="@{'/css/home-pdf1.css'}">
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Compact Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-logo">
+          <div class="logo-glow">
+            <img th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="PDF1" class="logo-icon">
+          </div>
+          <h1 class="hero-title">
+            <span class="title-line">PDF1</span>
+            <span class="title-subtitle">Next-Gen PDF Processing</span>
+          </h1>
+        </div>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="1000000">0</div>
+            <div class="stat-label">Files Processed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="99">0</div>
+            <div class="stat-label">Uptime %</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="50">0</div>
+            <div class="stat-label">Tools Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compact USP Section -->
+  <section class="usp-section">
+    <div class="container">
+      <div class="usp-grid">
+        <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-icon">
+            <span class="material-symbols-rounded">security</span>
+            <div class="icon-glow"></div>
+          </div>
+          <h3>Military-Grade Security</h3>
+          <p>End-to-end encryption with zero-knowledge architecture</p>
+          <div class="card-badge">ISO 27001</div>
+        </div>
+        
+        <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-icon">
+            <span class="material-symbols-rounded">delete_sweep</span>
+            <div class="icon-glow"></div>
+          </div>
+          <h3>Zero Storage Policy</h3>
+          <p>Files processed in memory and immediately destroyed</p>
+          <div class="card-badge">GDPR Compliant</div>
+        </div>
+        
+        <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-icon">
+            <span class="material-symbols-rounded">location_on</span>
+            <div class="icon-glow"></div>
+          </div>
+          <h3>German Engineering</h3>
+          <p>Built in Germany with strict EU data protection standards</p>
+          <div class="card-badge">Made in DE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="quick-actions">
+    <div class="container">
+      <div class="section-header">
+        <h2>Popular Tools</h2>
+        <p>Most used by our users</p>
+      </div>
+      
+      <div class="action-grid">
+        <a href="merge-pdfs" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">add_to_photos</span>
+            </div>
+            <h3>Merge PDFs</h3>
+            <p>Combine multiple files</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
+        </a>
+        
+        <a href="compress-pdf" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="150">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">zoom_in_map</span>
+            </div>
+            <h3>Compress</h3>
+            <p>Reduce file size</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
+        </a>
+        
+        <a href="pdf-to-word" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">description</span>
+            </div>
+            <h3>PDF to Word</h3>
+            <p>Convert to editable</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
+        </a>
+        
+        <a href="add-password" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="250">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">lock</span>
+            </div>
+            <h3>Add Password</h3>
+            <p>Secure your files</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- All Tools -->
+  <section class="all-tools">
+    <div class="container">
+      <div class="section-header">
+        <h2>Complete Tool Suite</h2>
+        <p>Everything you need for PDF processing</p>
+      </div>
+      
+      <div class="tools-container">
+        <div class="tool-category" data-aos="fade-up">
+          <div class="category-header">
+            <h3>Organize & Structure</h3>
+            <div class="category-icon">
+              <span class="material-symbols-rounded">folder</span>
+            </div>
+          </div>
+          <div class="tool-grid">
+            <a href="merge-pdfs" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">add_to_photos</span>
+              </div>
+              <div class="tool-info">
+                <h4>Merge PDFs</h4>
+                <p>Combine multiple PDFs into one</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="split-pdfs" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">cut</span>
+              </div>
+              <div class="tool-info">
+                <h4>Split PDFs</h4>
+                <p>Divide PDF into multiple files</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="rotate-pdf" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">rotate_right</span>
+              </div>
+              <div class="tool-info">
+                <h4>Rotate PDF</h4>
+                <p>Rotate pages in your PDF</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="tool-category" data-aos="fade-up" data-aos-delay="100">
+          <div class="category-header">
+            <h3>Convert & Transform</h3>
+            <div class="category-icon">
+              <span class="material-symbols-rounded">transform</span>
+            </div>
+          </div>
+          <div class="tool-grid">
+            <a href="pdf-to-word" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">description</span>
+              </div>
+              <div class="tool-info">
+                <h4>PDF to Word</h4>
+                <p>Convert PDF to Word format</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="pdf-to-img" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">photo_library</span>
+              </div>
+              <div class="tool-info">
+                <h4>PDF to Image</h4>
+                <p>Convert PDF to images</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="img-to-pdf" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">picture_as_pdf</span>
+              </div>
+              <div class="tool-info">
+                <h4>Image to PDF</h4>
+                <p>Convert images to PDF</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="tool-category" data-aos="fade-up" data-aos-delay="200">
+          <div class="category-header">
+            <h3>Security & Protection</h3>
+            <div class="category-icon">
+              <span class="material-symbols-rounded">shield</span>
+            </div>
+          </div>
+          <div class="tool-grid">
+            <a href="add-password" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">lock</span>
+              </div>
+              <div class="tool-info">
+                <h4>Add Password</h4>
+                <p>Encrypt PDF with password</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="sign" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">signature</span>
+              </div>
+              <div class="tool-info">
+                <h4>Sign PDF</h4>
+                <p>Add digital signature</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="add-watermark" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">water_drop</span>
+              </div>
+              <div class="tool-info">
+                <h4>Add Watermark</h4>
+                <p>Add custom watermark</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script th:inline="javascript">
+    // Animated counter
+    function animateCounter(element, target) {
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(current);
+      }, 20);
+    }
+
+    // Initialize counters when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        animateCounter(counter, target);
+      });
+    });
+
+    // Parallax effect for floating shapes
+    document.addEventListener('mousemove', (e) => {
+      const shapes = document.querySelectorAll('.shape');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.5;
+        shape.style.transform = `translate(${x * speed * 50}px, ${y * speed * 50}px)`;
+      });
+    });
+  </script>
+</body>
+</html>

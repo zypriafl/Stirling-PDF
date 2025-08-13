@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .document { fill: #ffffff; stroke: #333333; stroke-width: 1; }
+      .fold { fill: #f8f9fa; stroke: #333333; stroke-width: 1; }
+    </style>
+  </defs>
+  
+  <!-- Document base -->
+  <rect x="4" y="2" width="20" height="26" rx="1" class="document"/>
+  
+  <!-- Document fold -->
+  <polygon points="20,2 24,6 20,6" class="fold"/>
+  
+  <!-- Document lines -->
+  <line x1="8" y1="12" x2="20" y2="12" stroke="#333333" stroke-width="1"/>
+  <line x1="8" y1="16" x2="20" y2="16" stroke="#333333" stroke-width="1"/>
+  <line x1="8" y1="20" x2="20" y2="20" stroke="#333333" stroke-width="1"/>
+  <line x1="8" y1="24" x2="16" y2="24" stroke="#333333" stroke-width="1"/>
+</svg>

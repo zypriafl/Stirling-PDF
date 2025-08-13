@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}"
+  xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <th:block th:insert="~{fragments/common :: head(title=#{compress.title}, header=#{compress.header})}"></th:block>
+  <meta name="description" th:content="#{compress.metaDescription}">
+  <link rel="stylesheet" href="/css/compress-modern.css">
+</head>
+
+<body>
+  <th:block th:insert="~{fragments/common :: game}"></th:block>
+  <div id="page-container">
+    <div id="content-wrap">
+      <th:block th:insert="~{fragments/navbar.html :: navbar}"></th:block>
+      <br><br>
+      <!-- Hero Section -->
+      <div class="hero-section py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+              <div class="hero-content">
+                <div class="hero-badge mb-4">
+                  <span class="material-symbols-rounded">compress</span>
+                  <span>PDF Compression</span>
+                </div>
+                <h1 class="hero-title mb-4" th:text="#{compress.header}">Compress PDF</h1>
+                <p class="hero-subtitle mb-5" th:text="#{compress.seoDescription}">
+                  Efficiently compress your PDF files to reduce size while maintaining document quality.
+                </p>
+                <div class="hero-features">
+                  <div class="feature-pill">
+                    <span class="feature-icon">⚡</span>
+                    <span>90% Smaller</span>
+                  </div>
+                  <div class="feature-pill">
+                    <span class="feature-icon">🎯</span>
+                    <span>Quality Preserved</span>
+                  </div>
+                  <div class="feature-pill">
+                    <span class="feature-icon">🔒</span>
+                    <span>Secure & Private</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Tool Section -->
+      <div class="tool-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+              <form action="#" th:action="@{'/api/v1/misc/compress-pdf'}" method="post" enctype="multipart/form-data" class="compress-form">
+                
+                <!-- Upload Card -->
+                <div class="tool-card upload-card mb-4">
+                  <div class="card-header">
+                    <h2 class="card-title">
+                      <span class="card-icon">📄</span>
+                      Upload Your PDF
+                    </h2>
+                    <p class="card-subtitle">Select the PDF file you want to compress</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="upload-area">
+                      <div th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf')}"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Compression Settings Card -->
+                <div class="tool-card settings-card mb-4">
+                  <div class="card-header">
+                    <h2 class="card-title">
+                      <span class="card-icon">⚙️</span>
+                      Compression Settings
+                    </h2>
+                    <p class="card-subtitle">Choose how much to compress your PDF</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="compression-presets">
+                      <div class="preset-option active" data-level="balanced">
+                        <input type="radio" name="compressionMode" value="balanced" id="balanced" checked>
+                        <label for="balanced" class="preset-label">
+                          <div class="preset-header">
+                            <span class="preset-title">Balanced</span>
+                            <span class="preset-badge recommended">Recommended</span>
+                          </div>
+                          <div class="preset-description">Perfect balance of size and quality</div>
+                          <div class="preset-stats">~50-70% smaller</div>
+                        </label>
+                      </div>
+
+                      <div class="preset-option" data-level="maximum">
+                        <input type="radio" name="compressionMode" value="maximum" id="maximum">
+                        <label for="maximum" class="preset-label">
+                          <div class="preset-header">
+                            <span class="preset-title">Maximum</span>
+                            <span class="preset-badge aggressive">Aggressive</span>
+                          </div>
+                          <div class="preset-description">Smallest possible file size</div>
+                          <div class="preset-stats">~70-90% smaller</div>
+                        </label>
+                      </div>
+
+                      <div class="preset-option" data-level="custom">
+                        <input type="radio" name="compressionMode" value="custom" id="custom">
+                        <label for="custom" class="preset-label">
+                          <div class="preset-header">
+                            <span class="preset-title">Custom</span>
+                            <span class="preset-badge custom">Advanced</span>
+                          </div>
+                          <div class="preset-description">Fine-tune compression settings</div>
+                          <div class="preset-stats">Your choice</div>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Custom Settings Panel -->
+                    <div class="custom-panel" id="customPanel" style="display: none;">
+                      <div class="panel-content">
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <label for="optimizeLevel" class="form-label">Optimization Level</label>
+                            <select name="optimizeLevel" id="optimizeLevel" class="form-select">
+                              <option value="1">1 - Minimal compression</option>
+                              <option value="2">2 - Light compression</option>
+                              <option value="3">3 - Low compression</option>
+                              <option value="4">4 - Medium-low compression</option>
+                              <option value="5" selected>5 - Balanced compression</option>
+                              <option value="6">6 - Medium-high compression</option>
+                              <option value="7">7 - High compression</option>
+                              <option value="8">8 - Very high compression</option>
+                              <option value="9">9 - Maximum compression</option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="expectedOutputSize" class="form-label">Target Size (optional)</label>
+                            <input type="text" name="expectedOutputSize" id="expectedOutputSize" class="form-control" placeholder="e.g., 2MB">
+                          </div>
+                        </div>
+                        <div class="mt-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="grayscale" id="grayscaleCheck" value="true">
+                            <label class="form-check-label" for="grayscaleCheck">
+                              Convert to grayscale for extra compression
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Section -->
+                <div class="action-section text-center">
+                  <button type="submit" id="submitBtn" class="compress-btn">
+                    <span class="btn-icon">🗜️</span>
+                    <span class="btn-text">Compress PDF</span>
+                  </button>
+                  <p class="action-note">Files are processed securely and automatically deleted</p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <th:block th:insert="~{fragments/footer.html :: footer}"></th:block>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle compression preset selection
+      const presetOptions = document.querySelectorAll('.preset-option');
+      const customPanel = document.getElementById('customPanel');
+      const radioButtons = document.querySelectorAll('input[name="compressionMode"]');
+      const optimizeLevelSelect = document.getElementById('optimizeLevel');
+      
+      function updateCompressionLevel(mode) {
+        switch(mode) {
+          case 'balanced':
+            optimizeLevelSelect.value = '5';
+            break;
+          case 'maximum':
+            optimizeLevelSelect.value = '8';
+            break;
+          case 'custom':
+            // Keep current selection
+            break;
+        }
+      }
+      
+      // Handle preset option clicks
+      presetOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          const radio = this.querySelector('input[type="radio"]');
+          const mode = radio.value;
+          
+          // Remove active class from all options
+          presetOptions.forEach(o => o.classList.remove('active'));
+          
+          // Add active class to clicked option
+          this.classList.add('active');
+          
+          // Check the radio button
+          radio.checked = true;
+          
+          // Update compression level
+          updateCompressionLevel(mode);
+          
+          // Show/hide custom panel
+          if (mode === 'custom') {
+            customPanel.style.display = 'block';
+            customPanel.classList.add('show');
+          } else {
+            customPanel.style.display = 'none';
+            customPanel.classList.remove('show');
+          }
+        });
+      });
+      
+      // Handle radio button changes (for keyboard navigation)
+      radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+          const option = this.closest('.preset-option');
+          const mode = this.value;
+          
+          // Remove active class from all options
+          presetOptions.forEach(o => o.classList.remove('active'));
+          
+          // Add active class to parent option
+          option.classList.add('active');
+          
+          // Update compression level
+          updateCompressionLevel(mode);
+          
+          // Show/hide custom panel
+          if (mode === 'custom') {
+            customPanel.style.display = 'block';
+            customPanel.classList.add('show');
+          } else {
+            customPanel.style.display = 'none';
+            customPanel.classList.remove('show');
+          }
+        });
+      });
+      
+      // Initialize default state
+      const defaultRadio = document.querySelector('input[name="compressionMode"]:checked');
+      if (defaultRadio) {
+        updateCompressionLevel(defaultRadio.value);
+      }
+      
+      // Add file upload feedback
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput) {
+        fileInput.addEventListener('change', function() {
+          const uploadArea = document.querySelector('.upload-area');
+          if (this.files.length > 0 && uploadArea) {
+            uploadArea.style.borderColor = '#10b981';
+            uploadArea.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

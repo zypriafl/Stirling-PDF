@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}"
+  xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <th:block th:insert="~{fragments/common :: head(title=#{rotate.title}, header=#{rotate.header})}"></th:block>
+  <link rel="stylesheet" th:href="@{'/css/rotate-pdf-pdf1.css'}">
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
+
+  <div id="page-container">
+    <div id="content-wrap">
+      <!-- No navbar for PDF1 - clean design -->
+      
+      <div class="container">
+        <div class="tool-container">
+          <div class="tool-header glass-card">
+            <div class="header-content">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">rotate_right</span>
+                <div class="icon-glow"></div>
+              </div>
+              <div class="tool-info">
+                <h1 class="tool-title" th:text="#{rotate.header}">Rotate PDF</h1>
+                <p class="tool-description">Rotate pages in your PDF document</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-content glass-card">
+            <form action="#" th:action="@{'/api/v1/general/rotate-pdf'}" th:object="${rotateForm}" method="post"
+              enctype="multipart/form-data">
+              
+              <div class="file-upload-section">
+                <div
+                  th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf')}">
+                </div>
+              </div>
+              
+              <input type="hidden" id="angleInput" name="angle" value="0">
+
+              <div id="editSection" class="preview-section" style="display: none">
+                <div class="preview-container">
+                  <h3>Preview</h3>
+                  <div id="previewContainer" class="pdf-preview-container">
+                    <!-- pdf-preview will be inserted here -->
+                  </div>
+                </div>
+
+                <div class="controls-container">
+                  <div class="rotation-controls">
+                    <button type="button" class="control-btn glass-card" onclick="rotate(-90)">
+                      <span class="material-symbols-rounded">rotate_left</span>
+                      <span>Rotate Left</span>
+                    </button>
+                    
+                    <button type="submit" id="submitBtn" class="submit-btn glass-card">
+                      <span class="material-symbols-rounded">download</span>
+                      <span th:text="#{rotate.submit}">Download Rotated PDF</span>
+                    </button>
+                    
+                    <button type="button" class="control-btn glass-card" onclick="rotate(90)">
+                      <span class="material-symbols-rounded">rotate_right</span>
+                      <span>Rotate Right</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module" th:src="@{'/pdfjs-legacy/pdf.mjs'}"></script>
+  <script>
+    const angleInput = document.getElementById("angleInput");
+    const fileInput = document.getElementById("fileInput-input");
+    const previewContainer = document.getElementById("previewContainer");
+    
+    fileInput.addEventListener("change", async function () {
+      console.log("loading pdf");
+
+      document.querySelector("#editSection").style.display = "block";
+
+      const existingPreview = document.getElementById("pdf-preview");
+      if (existingPreview) {
+        existingPreview.remove();
+      }
+      
+      var url = URL.createObjectURL(fileInput.files[0])
+      pdfjsLib.GlobalWorkerOptions.workerSrc = './pdfjs-legacy/pdf.worker.mjs'
+      const pdf = await pdfjsLib.getDocument(url).promise;
+      const page = await pdf.getPage(1);
+
+      const canvas = document.createElement("canvas");
+
+      // set the canvas size to the size of the page
+      if (page.rotate == 90 || page.rotate == 270) {
+        canvas.width = page.view[3];
+        canvas.height = page.view[2];
+      } else {
+        canvas.width = page.view[2];
+        canvas.height = page.view[3];
+      }
+
+      // render the page onto the canvas
+      var renderContext = {
+        canvasContext: canvas.getContext("2d"),
+        viewport: page.getViewport({ scale: 1 })
+      };
+
+      await page.render(renderContext).promise;
+      const preview = document.createElement("img");
+      preview.id = "pdf-preview";
+      preview.alt = "preview";
+      preview.src = canvas.toDataURL();
+      previewContainer.appendChild(preview);
+    });
+
+    function rotate(deg) {
+      const preview = document.getElementById("pdf-preview");
+      var lastTransform = preview.style.rotate;
+      if (!lastTransform) {
+        lastTransform = "0";
+      }
+      const lastAngle = parseInt(lastTransform.replace(/[^\d-]/g, ''));
+      const newAngle = lastAngle + deg;
+      preview.style.rotate = newAngle + "deg";
+      angleInput.value = newAngle;
+    }
+
+    // Parallax effect for floating shapes
+    document.addEventListener('mousemove', (e) => {
+      const shapes = document.querySelectorAll('.shape');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.3;
+        shape.style.transform = `translate(${x * speed * 30}px, ${y * speed * 30}px)`;
+      });
+    });
+  </script>
+</body>
+
+</html>
+

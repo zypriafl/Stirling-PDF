@@ -1,0 +1,7 @@
+<th:block th:fragment="languageEntry(code, name)">
+  <div th:if="${code} == 'de_DE' or ${code} == 'en_US'" class="lang-dropdown-item-wrapper">
+      <a 
+        class="dropdown-item lang_dropdown-item" href="" th:data-bs-language-code="@{${code}}" th:text="${name}">
+      </a>
+  </div>
+</th:block>
