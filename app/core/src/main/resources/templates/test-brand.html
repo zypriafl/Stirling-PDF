@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Brand Test</title>
+</head>
+<body>
+    <h1>Brand Configuration Test</h1>
+    
+    <h2>Current Brand: <span th:text="${@currentBrand}">UNKNOWN</span></h2>
+    
+    <h3>Icon Paths:</h3>
+    <ul>
+        <li>SVG: <span th:text="@{'/images/' + ${@currentBrand} + '/favicon.svg'}">path</span></li>
+        <li>32x32: <span th:text="@{'/images/' + ${@currentBrand} + '/favicon-32x32.png'}">path</span></li>
+        <li>16x16: <span th:text="@{'/images/' + ${@currentBrand} + '/favicon-16x16.png'}">path</span></li>
+        <li>Apple Touch: <span th:text="@{'/images/' + ${@currentBrand} + '/apple-touch-icon.png'}">path</span></li>
+    </ul>
+    
+    <h3>Brand-Specific Content:</h3>
+    <p th:if="${@currentBrand == 'pdf1'}">This is PDF1 brand!</p>
+    <p th:if="${@currentBrand == 'konfuzio'}">This is Konfuzio brand!</p>
+    
+    <h3>Configuration Test:</h3>
+    <p>App Name: <span th:text="${@appName}">UNKNOWN</span></p>
+    <p>Nav Bar Text: <span th:text="${@navBarText}">UNKNOWN</span></p>
+</body>
+</html>
