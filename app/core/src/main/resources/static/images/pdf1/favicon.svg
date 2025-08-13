@@ -2,9 +2,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <defs>
     <style>
-      .pdf1-icon { fill: #333; }
+      .document { fill: #ffffff; stroke: #333333; stroke-width: 1; }
+      .pdf-text { fill: #e74c3c; font-family: Arial, sans-serif; font-size: 8; font-weight: bold; }
+      .fold { fill: #f8f9fa; stroke: #333333; stroke-width: 1; }
     </style>
   </defs>
-  <rect width="32" height="32" rx="4" fill="#ffffff"/>
-  <text x="16" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" class="pdf1-icon">PDF1</text>
+  
+  <!-- Document base -->
+  <rect x="4" y="2" width="20" height="26" rx="1" class="document"/>
+  
+  <!-- Document fold -->
+  <polygon points="20,2 24,6 20,6" class="fold"/>
+  
+  <!-- PDF text -->
+  <text x="16" y="18" text-anchor="middle" class="pdf-text">PDF</text>
+  
+  <!-- Document lines -->
+  <line x1="8" y1="22" x2="20" y2="22" stroke="#333333" stroke-width="1"/>
+  <line x1="8" y1="25" x2="16" y2="25" stroke="#333333" stroke-width="1"/>
 </svg>
