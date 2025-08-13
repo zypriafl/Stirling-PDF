@@ -28,6 +28,7 @@ import stirling.software.SPDF.model.SignatureFile;
 import stirling.software.SPDF.service.SignatureService;
 import stirling.software.common.configuration.InstallationPathConfig;
 import stirling.software.common.configuration.RuntimePathConfig;
+import stirling.software.common.model.ApplicationProperties;
 import stirling.software.common.service.UserServiceInterface;
 import stirling.software.common.util.ExceptionUtils;
 import stirling.software.common.util.GeneralUtils;
@@ -41,16 +42,19 @@ public class GeneralWebController {
     private final UserServiceInterface userService;
     private final ResourceLoader resourceLoader;
     private final RuntimePathConfig runtimePathConfig;
+    private final ApplicationProperties applicationProperties;
 
     public GeneralWebController(
             SignatureService signatureService,
             @Autowired(required = false) UserServiceInterface userService,
             ResourceLoader resourceLoader,
-            RuntimePathConfig runtimePathConfig) {
+            RuntimePathConfig runtimePathConfig,
+            ApplicationProperties applicationProperties) {
         this.signatureService = signatureService;
         this.userService = userService;
         this.resourceLoader = resourceLoader;
         this.runtimePathConfig = runtimePathConfig;
+        this.applicationProperties = applicationProperties;
     }
 
     @GetMapping("/pipeline")
@@ -177,6 +181,12 @@ public class GeneralWebController {
     @Hidden
     public String rotatePdfForm(Model model) {
         model.addAttribute("currentPage", "rotate-pdf");
+
+        // Check brand and return appropriate template
+        String brand = applicationProperties.getUi().getBrand();
+        if ("pdf1".equals(brand)) {
+            return "rotate-pdf-pdf1";
+        }
         return "rotate-pdf";
     }
 

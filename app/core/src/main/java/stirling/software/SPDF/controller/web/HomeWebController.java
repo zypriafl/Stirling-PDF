@@ -70,9 +70,12 @@ public class HomeWebController {
 
         // Check brand and return appropriate template
         String brand = applicationProperties.getUi().getBrand();
+        log.info("Current brand configuration: '{}'", brand);
         if ("pdf1".equals(brand)) {
+            log.info("Using pdf1 template");
             return "home-pdf1";
         }
+        log.info("Using default home template");
         return "home";
     }
 
