@@ -249,33 +249,68 @@ body {
 
 /* Tool Cards Styling */
 .nav-group-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 1.5rem !important;
+  margin-top: 1rem !important;
+  width: 100% !important;
 }
 
 .nav-group {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 1.5rem !important;
+  margin-top: 1rem !important;
+  width: 100% !important;
+}
+
+/* Force grid layout on all tool containers */
+.feature-group .nav-group-container {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 1.5rem !important;
+  flex-direction: unset !important;
+  flex-wrap: unset !important;
+}
+
+/* Override any inline styles that might be set */
+.feature-group {
+  display: block !important;
+}
+
+.feature-group[style*="display: flex"] {
+  display: block !important;
+}
+
+.feature-group[style*="display:flex"] {
+  display: block !important;
+}
+
+/* Ensure nav-group-container is always grid */
+.nav-group-container[style*="display: flex"] {
+  display: grid !important;
+}
+
+.nav-group-container[style*="display:flex"] {
+  display: grid !important;
 }
 
 /* Individual tool card styling */
 .dropdown-item {
-  background: white;
-  border: 1px solid #e9ecef;
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-decoration: none;
-  color: #333;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+  background: white !important;
+  border: 1px solid #e9ecef !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  text-decoration: none !important;
+  color: #333 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  min-height: 80px !important;
 }
 
 .dropdown-item:hover {
