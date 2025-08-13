@@ -8,46 +8,102 @@
 </head>
 
 <body>
-  <!-- Simple Header -->
-  <header class="pdf1-header">
-    <div class="header-content">
-      <div class="logo">
-        <img th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="PDF1">
-        <h1>PDF1</h1>
-      </div>
-      <p class="tagline">Professional PDF Tools</p>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
     </div>
-  </header>
+  </div>
 
-  <!-- USP Section -->
-  <section class="usp-section">
-    <div class="container">
-      <div class="usp-grid">
-        <div class="usp-card">
-          <span class="material-symbols-rounded">security</span>
-          <h3>Secure</h3>
-          <p>Your files are processed securely and never saved on our servers</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-logo">
+          <div class="logo-glow">
+            <img th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="PDF1" class="logo-icon">
+          </div>
+          <h1 class="hero-title">
+            <span class="title-line">PDF1</span>
+            <span class="title-subtitle">Next-Gen PDF Processing</span>
+          </h1>
         </div>
-        <div class="usp-card">
-          <span class="material-symbols-rounded">delete_sweep</span>
-          <h3>No Storage</h3>
-          <p>We don't save your files - they're processed and immediately deleted</p>
-        </div>
-        <div class="usp-card">
-          <span class="material-symbols-rounded">location_on</span>
-          <h3>German Company</h3>
-          <p>Trusted German engineering with strict data protection standards</p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="1000000">0</div>
+            <div class="stat-label">Files Processed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="99">0</div>
+            <div class="stat-label">Uptime %</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="50">0</div>
+            <div class="stat-label">Tools Available</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Search Section -->
+  <!-- USP Section with Glassmorphism -->
+  <section class="usp-section">
+    <div class="container">
+      <div class="usp-header">
+        <h2 class="section-title">Why Choose PDF1?</h2>
+        <p class="section-subtitle">Enterprise-grade security meets German engineering</p>
+      </div>
+      
+      <div class="usp-grid">
+        <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-icon">
+            <span class="material-symbols-rounded">security</span>
+            <div class="icon-glow"></div>
+          </div>
+          <h3>Military-Grade Security</h3>
+          <p>End-to-end encryption with zero-knowledge architecture. Your files never touch our servers.</p>
+          <div class="card-badge">ISO 27001</div>
+        </div>
+        
+        <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-icon">
+            <span class="material-symbols-rounded">delete_sweep</span>
+            <div class="icon-glow"></div>
+          </div>
+          <h3>Zero Storage Policy</h3>
+          <p>Files are processed in memory and immediately destroyed. No traces, no logs, no storage.</p>
+          <div class="card-badge">GDPR Compliant</div>
+        </div>
+        
+        <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-icon">
+            <span class="material-symbols-rounded">location_on</span>
+            <div class="icon-glow"></div>
+          </div>
+          <h3>German Engineering</h3>
+          <p>Built in Germany with strict EU data protection standards and transparent operations.</p>
+          <div class="card-badge">Made in DE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Smart Search -->
   <section class="search-section">
     <div class="search-container">
-      <div class="search-box">
-        <span class="material-symbols-rounded">search</span>
-        <input type="text" id="searchBar" onkeyup="filterCards()" th:placeholder="#{home.searchBar}" autofocus>
+      <div class="search-wrapper glass-card">
+        <div class="search-icon">
+          <span class="material-symbols-rounded">search</span>
+        </div>
+        <input type="text" id="searchBar" onkeyup="filterCards()" th:placeholder="'Search 50+ PDF tools...'" autofocus>
+        <div class="search-suggestions">
+          <span class="suggestion">Try: merge, compress, convert</span>
+        </div>
       </div>
     </div>
   </section>
@@ -55,31 +111,62 @@
   <!-- Quick Actions -->
   <section class="quick-actions">
     <div class="container">
-      <h2>Quick Actions</h2>
+      <div class="section-header">
+        <h2>Popular Tools</h2>
+        <p>Most used by our users</p>
+      </div>
+      
       <div class="action-grid">
-        <a href="merge-pdfs" class="action-card">
-          <span class="material-symbols-rounded">add_to_photos</span>
-          <span>Merge PDFs</span>
+        <a href="merge-pdfs" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">add_to_photos</span>
+            </div>
+            <h3>Merge PDFs</h3>
+            <p>Combine multiple files</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
         </a>
-        <a href="split-pdfs" class="action-card">
-          <span class="material-symbols-rounded">cut</span>
-          <span>Split PDFs</span>
+        
+        <a href="compress-pdf" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="150">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">zoom_in_map</span>
+            </div>
+            <h3>Compress</h3>
+            <p>Reduce file size</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
         </a>
-        <a href="compress-pdf" class="action-card">
-          <span class="material-symbols-rounded">zoom_in_map</span>
-          <span>Compress</span>
+        
+        <a href="pdf-to-word" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">description</span>
+            </div>
+            <h3>PDF to Word</h3>
+            <p>Convert to editable</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
         </a>
-        <a href="pdf-to-word" class="action-card">
-          <span class="material-symbols-rounded">description</span>
-          <span>PDF to Word</span>
-        </a>
-        <a href="add-password" class="action-card">
-          <span class="material-symbols-rounded">lock</span>
-          <span>Add Password</span>
-        </a>
-        <a href="view-pdf" class="action-card">
-          <span class="material-symbols-rounded">menu_book</span>
-          <span>View PDF</span>
+        
+        <a href="add-password" class="action-card glass-card" data-aos="zoom-in" data-aos-delay="250">
+          <div class="card-content">
+            <div class="card-icon">
+              <span class="material-symbols-rounded">lock</span>
+            </div>
+            <h3>Add Password</h3>
+            <p>Secure your files</p>
+          </div>
+          <div class="card-hover">
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </div>
         </a>
       </div>
     </div>
@@ -88,212 +175,227 @@
   <!-- All Tools -->
   <section class="all-tools">
     <div class="container">
-      <h2>All PDF Tools</h2>
+      <div class="section-header">
+        <h2>Complete Tool Suite</h2>
+        <p>Everything you need for PDF processing</p>
+      </div>
       
-      <!-- Organize -->
-      <div class="tool-category">
-        <h3>Organize</h3>
-        <div class="tool-grid">
-          <a href="merge-pdfs" class="tool-card">
-            <span class="material-symbols-rounded">add_to_photos</span>
-            <div class="tool-info">
-              <h4>Merge PDFs</h4>
-              <p>Combine multiple PDFs into one</p>
+      <div class="tools-container">
+        <div class="tool-category" data-aos="fade-up">
+          <div class="category-header">
+            <h3>Organize & Structure</h3>
+            <div class="category-icon">
+              <span class="material-symbols-rounded">folder</span>
             </div>
-          </a>
-          <a href="split-pdfs" class="tool-card">
-            <span class="material-symbols-rounded">cut</span>
-            <div class="tool-info">
-              <h4>Split PDFs</h4>
-              <p>Divide PDF into multiple files</p>
-            </div>
-          </a>
-          <a href="rotate-pdf" class="tool-card">
-            <span class="material-symbols-rounded">rotate_right</span>
-            <div class="tool-info">
-              <h4>Rotate PDF</h4>
-              <p>Rotate pages in your PDF</p>
-            </div>
-          </a>
-          <a href="crop" class="tool-card">
-            <span class="material-symbols-rounded">crop</span>
-            <div class="tool-info">
-              <h4>Crop PDF</h4>
-              <p>Trim PDF to reduce size</p>
-            </div>
-          </a>
+          </div>
+          <div class="tool-grid">
+            <a href="merge-pdfs" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">add_to_photos</span>
+              </div>
+              <div class="tool-info">
+                <h4>Merge PDFs</h4>
+                <p>Combine multiple PDFs into one</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="split-pdfs" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">cut</span>
+              </div>
+              <div class="tool-info">
+                <h4>Split PDFs</h4>
+                <p>Divide PDF into multiple files</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="rotate-pdf" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">rotate_right</span>
+              </div>
+              <div class="tool-info">
+                <h4>Rotate PDF</h4>
+                <p>Rotate pages in your PDF</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
 
-      <!-- Convert -->
-      <div class="tool-category">
-        <h3>Convert</h3>
-        <div class="tool-grid">
-          <a href="pdf-to-word" class="tool-card">
-            <span class="material-symbols-rounded">description</span>
-            <div class="tool-info">
-              <h4>PDF to Word</h4>
-              <p>Convert PDF to Word format</p>
+        <div class="tool-category" data-aos="fade-up" data-aos-delay="100">
+          <div class="category-header">
+            <h3>Convert & Transform</h3>
+            <div class="category-icon">
+              <span class="material-symbols-rounded">transform</span>
             </div>
-          </a>
-          <a href="pdf-to-img" class="tool-card">
-            <span class="material-symbols-rounded">photo_library</span>
-            <div class="tool-info">
-              <h4>PDF to Image</h4>
-              <p>Convert PDF to images</p>
-            </div>
-          </a>
-          <a href="img-to-pdf" class="tool-card">
-            <span class="material-symbols-rounded">picture_as_pdf</span>
-            <div class="tool-info">
-              <h4>Image to PDF</h4>
-              <p>Convert images to PDF</p>
-            </div>
-          </a>
-          <a href="file-to-pdf" class="tool-card">
-            <span class="material-symbols-rounded">draft</span>
-            <div class="tool-info">
-              <h4>File to PDF</h4>
-              <p>Convert any file to PDF</p>
-            </div>
-          </a>
+          </div>
+          <div class="tool-grid">
+            <a href="pdf-to-word" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">description</span>
+              </div>
+              <div class="tool-info">
+                <h4>PDF to Word</h4>
+                <p>Convert PDF to Word format</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="pdf-to-img" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">photo_library</span>
+              </div>
+              <div class="tool-info">
+                <h4>PDF to Image</h4>
+                <p>Convert PDF to images</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="img-to-pdf" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">picture_as_pdf</span>
+              </div>
+              <div class="tool-info">
+                <h4>Image to PDF</h4>
+                <p>Convert images to PDF</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
 
-      <!-- Security -->
-      <div class="tool-category">
-        <h3>Security</h3>
-        <div class="tool-grid">
-          <a href="add-password" class="tool-card">
-            <span class="material-symbols-rounded">lock</span>
-            <div class="tool-info">
-              <h4>Add Password</h4>
-              <p>Encrypt PDF with password</p>
+        <div class="tool-category" data-aos="fade-up" data-aos-delay="200">
+          <div class="category-header">
+            <h3>Security & Protection</h3>
+            <div class="category-icon">
+              <span class="material-symbols-rounded">shield</span>
             </div>
-          </a>
-          <a href="remove-password" class="tool-card">
-            <span class="material-symbols-rounded">lock_open_right</span>
-            <div class="tool-info">
-              <h4>Remove Password</h4>
-              <p>Remove PDF protection</p>
-            </div>
-          </a>
-          <a href="sign" class="tool-card">
-            <span class="material-symbols-rounded">signature</span>
-            <div class="tool-info">
-              <h4>Sign PDF</h4>
-              <p>Add digital signature</p>
-            </div>
-          </a>
-          <a href="add-watermark" class="tool-card">
-            <span class="material-symbols-rounded">water_drop</span>
-            <div class="tool-info">
-              <h4>Add Watermark</h4>
-              <p>Add custom watermark</p>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- View & Edit -->
-      <div class="tool-category">
-        <h3>View & Edit</h3>
-        <div class="tool-grid">
-          <a href="view-pdf" class="tool-card">
-            <span class="material-symbols-rounded">menu_book</span>
-            <div class="tool-info">
-              <h4>View PDF</h4>
-              <p>View and annotate PDFs</p>
-            </div>
-          </a>
-          <a href="add-page-numbers" class="tool-card">
-            <span class="material-symbols-rounded">123</span>
-            <div class="tool-info">
-              <h4>Add Page Numbers</h4>
-              <p>Add numbering to pages</p>
-            </div>
-          </a>
-          <a href="extract-images" class="tool-card">
-            <span class="material-symbols-rounded">photo_library</span>
-            <div class="tool-info">
-              <h4>Extract Images</h4>
-              <p>Extract images from PDF</p>
-            </div>
-          </a>
-          <a href="change-metadata" class="tool-card">
-            <span class="material-symbols-rounded">assignment</span>
-            <div class="tool-info">
-              <h4>Change Metadata</h4>
-              <p>Edit PDF properties</p>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- Advanced -->
-      <div class="tool-category">
-        <h3>Advanced</h3>
-        <div class="tool-grid">
-          <a href="compress-pdf" class="tool-card">
-            <span class="material-symbols-rounded">zoom_in_map</span>
-            <div class="tool-info">
-              <h4>Compress PDF</h4>
-              <p>Reduce PDF file size</p>
-            </div>
-          </a>
-          <a href="ocr-pdf" class="tool-card">
-            <span class="material-symbols-rounded">quick_reference_all</span>
-            <div class="tool-info">
-              <h4>OCR PDF</h4>
-              <p>Extract text from scans</p>
-            </div>
-          </a>
-          <a href="repair" class="tool-card">
-            <span class="material-symbols-rounded">build</span>
-            <div class="tool-info">
-              <h4>Repair PDF</h4>
-              <p>Fix corrupted PDFs</p>
-            </div>
-          </a>
-          <a href="pipeline" class="tool-card">
-            <span class="material-symbols-rounded">family_history</span>
-            <div class="tool-info">
-              <h4>Pipeline</h4>
-              <p>Automate PDF workflows</p>
-            </div>
-          </a>
+          </div>
+          <div class="tool-grid">
+            <a href="add-password" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">lock</span>
+              </div>
+              <div class="tool-info">
+                <h4>Add Password</h4>
+                <p>Encrypt PDF with password</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="sign" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">signature</span>
+              </div>
+              <div class="tool-info">
+                <h4>Sign PDF</h4>
+                <p>Add digital signature</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+            
+            <a href="add-watermark" class="tool-card glass-card">
+              <div class="tool-icon">
+                <span class="material-symbols-rounded">water_drop</span>
+              </div>
+              <div class="tool-info">
+                <h4>Add Watermark</h4>
+                <p>Add custom watermark</p>
+              </div>
+              <div class="tool-arrow">
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <script th:inline="javascript">
+    // Animated counter
+    function animateCounter(element, target) {
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(current);
+      }, 20);
+    }
+
+    // Initialize counters when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        animateCounter(counter, target);
+      });
+    });
+
+    // Enhanced search with animations
     function filterCards() {
       const searchTerm = document.getElementById('searchBar').value.toLowerCase();
       const cards = document.querySelectorAll('.tool-card, .action-card');
       
-      cards.forEach(card => {
+      cards.forEach((card, index) => {
         const text = card.textContent.toLowerCase();
         if (text.includes(searchTerm)) {
           card.style.display = 'flex';
+          card.style.animation = `fadeInUp 0.3s ease ${index * 0.05}s both`;
         } else {
           card.style.display = 'none';
         }
       });
       
-      // Also filter USP cards if search term is security-related
+      // Filter USP cards for security terms
       const uspCards = document.querySelectorAll('.usp-card');
-      const securityTerms = ['secure', 'security', 'privacy', 'german', 'storage', 'save', 'delete'];
+      const securityTerms = ['secure', 'security', 'privacy', 'german', 'storage', 'save', 'delete', 'encrypt'];
       const isSecuritySearch = securityTerms.some(term => searchTerm.includes(term));
       
       uspCards.forEach(card => {
         if (searchTerm === '' || isSecuritySearch) {
           card.style.display = 'block';
+          card.style.animation = 'fadeInUp 0.3s ease both';
         } else {
           card.style.display = 'none';
         }
       });
     }
+
+    // Parallax effect for floating shapes
+    document.addEventListener('mousemove', (e) => {
+      const shapes = document.querySelectorAll('.shape');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.5;
+        shape.style.transform = `translate(${x * speed * 50}px, ${y * speed * 50}px)`;
+      });
+    });
   </script>
 </body>
 </html>
