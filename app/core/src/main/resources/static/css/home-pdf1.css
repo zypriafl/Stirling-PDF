@@ -1,5 +1,20 @@
 /* PDF1 Home Page Styles */
 
+/* Reset and base styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f9fa;
+  color: #333;
+}
+
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Hero Section */
 .pdf1-hero {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -92,9 +107,9 @@
 
 /* Controls Section */
 .controls-section {
-  background: var(--bs-body-bg);
+  background: white;
   padding: 2rem 0;
-  border-bottom: 1px solid var(--bs-border-color);
+  border-bottom: 1px solid #e9ecef;
 }
 
 .controls-container {
@@ -116,15 +131,15 @@
 
 .sort-controls label {
   font-weight: 500;
-  color: var(--bs-body-color);
+  color: #333;
 }
 
 #sort-options {
-  background: var(--bs-body-bg);
-  border: 1px solid var(--bs-border-color);
+  background: white;
+  border: 1px solid #e9ecef;
   border-radius: 8px;
   padding: 0.5rem 1rem;
-  color: var(--bs-body-color);
+  color: #333;
   outline: none;
   transition: border-color 0.2s;
 }
@@ -140,10 +155,10 @@
 
 .control-btn {
   background: transparent;
-  border: 1px solid var(--bs-border-color);
+  border: 1px solid #e9ecef;
   border-radius: 8px;
   padding: 0.75rem;
-  color: var(--bs-body-color);
+  color: #333;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -152,7 +167,7 @@
 }
 
 .control-btn:hover {
-  background: var(--bs-light);
+  background: #f8f9fa;
   border-color: #667eea;
   color: #667eea;
 }
@@ -169,6 +184,7 @@
 .recent-section,
 .tools-section {
   padding: 3rem 0;
+  background: white;
 }
 
 .section-container {
@@ -185,13 +201,13 @@
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--bs-body-color);
+  color: #333;
   margin-bottom: 1rem;
 }
 
 .section-description {
   font-size: 1.1rem;
-  color: var(--bs-secondary);
+  color: #666;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -212,7 +228,7 @@
 
 /* Features Container */
 .features-container {
-  border-top: 1px solid var(--bs-border-color);
+  border-top: 1px solid #e9ecef;
   padding-top: 2rem;
 }
 
@@ -220,6 +236,82 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+/* Tool Cards Styling */
+.nav-group-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.nav-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Individual tool card styling */
+.navbar-entry {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  text-decoration: none;
+  color: #667eea;
+  border-color: #667eea;
+}
+
+.navbar-entry .material-symbols-rounded {
+  font-size: 2rem;
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.navbar-entry .tool-text {
+  flex: 1;
+}
+
+.navbar-entry .tool-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.navbar-entry .tool-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Feature group headers */
+.feature-group-header {
+  margin-bottom: 1.5rem;
+}
+
+.feature-group-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+  display: inline-block;
 }
 
 /* Responsive Design */
@@ -260,18 +352,7 @@
   }
 }
 
-/* Dark Mode Adjustments */
-[data-bs-theme="dark"] .pdf1-hero {
-  background: linear-gradient(135deg, #4c63d2 0%, #5a4b8a 100%);
-}
 
-[data-bs-theme="dark"] .search-container {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-[data-bs-theme="dark"] .control-btn:hover {
-  background: var(--bs-dark);
-}
 
 /* Animation */
 @keyframes fadeInUp {
