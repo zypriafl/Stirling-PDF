@@ -59,6 +59,56 @@ body {
   margin: 0;
 }
 
+/* USP Section */
+.usp-section {
+  background: white;
+  padding: 3rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.usp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.usp-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.usp-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-color: #667eea;
+}
+
+.usp-card .material-symbols-rounded {
+  font-size: 3rem;
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+.usp-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.usp-card p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
 /* Search Section */
 .search-section {
   background: white;
@@ -237,6 +287,15 @@ body {
   
   .tagline {
     font-size: 1rem;
+  }
+  
+  .usp-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .usp-card {
+    padding: 1.5rem 1rem;
   }
   
   .action-grid {

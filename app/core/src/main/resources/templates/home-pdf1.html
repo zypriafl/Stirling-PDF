@@ -19,6 +19,29 @@
     </div>
   </header>
 
+  <!-- USP Section -->
+  <section class="usp-section">
+    <div class="container">
+      <div class="usp-grid">
+        <div class="usp-card">
+          <span class="material-symbols-rounded">security</span>
+          <h3>Secure</h3>
+          <p>Your files are processed securely and never saved on our servers</p>
+        </div>
+        <div class="usp-card">
+          <span class="material-symbols-rounded">delete_sweep</span>
+          <h3>No Storage</h3>
+          <p>We don't save your files - they're processed and immediately deleted</p>
+        </div>
+        <div class="usp-card">
+          <span class="material-symbols-rounded">location_on</span>
+          <h3>German Company</h3>
+          <p>Trusted German engineering with strict data protection standards</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Search Section -->
   <section class="search-section">
     <div class="search-container">
@@ -253,6 +276,19 @@
         const text = card.textContent.toLowerCase();
         if (text.includes(searchTerm)) {
           card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      
+      // Also filter USP cards if search term is security-related
+      const uspCards = document.querySelectorAll('.usp-card');
+      const securityTerms = ['secure', 'security', 'privacy', 'german', 'storage', 'save', 'delete'];
+      const isSecuritySearch = securityTerms.some(term => searchTerm.includes(term));
+      
+      uspCards.forEach(card => {
+        if (searchTerm === '' || isSecuritySearch) {
+          card.style.display = 'block';
         } else {
           card.style.display = 'none';
         }
