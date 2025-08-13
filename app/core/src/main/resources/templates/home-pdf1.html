@@ -8,136 +8,256 @@
 </head>
 
 <body>
-  <div class="page-container" style="max-height:100vh;">
-    <!-- No navbar for PDF1 - clean design -->
-    
-    <!-- PDF1 Hero Section -->
-    <div class="pdf1-hero">
-      <div class="hero-content">
-        <div class="hero-icon">
-          <img th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="PDF1" class="hero-logo">
-        </div>
-        <h1 class="hero-title">Professional PDF Tools</h1>
-        <p class="hero-subtitle" th:text="${@homeText != 'null' and @homeText != null and @homeText != ''} ? ${@homeText} : #{home.desc}">
-          Transform your PDF workflow with powerful, easy-to-use tools
-        </p>
-        <div class="hero-search">
-          <div class="search-container">
-            <span class="material-symbols-rounded search-icon">search</span>
-            <input type="text" id="searchBar" onkeyup="filterCards()" th:placeholder="#{home.searchBar}" autofocus>
-          </div>
-        </div>
+  <!-- Simple Header -->
+  <header class="pdf1-header">
+    <div class="header-content">
+      <div class="logo">
+        <img th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="PDF1">
+        <h1>PDF1</h1>
+      </div>
+      <p class="tagline">Professional PDF Tools</p>
+    </div>
+  </header>
+
+  <!-- Search Section -->
+  <section class="search-section">
+    <div class="search-container">
+      <div class="search-box">
+        <span class="material-symbols-rounded">search</span>
+        <input type="text" id="searchBar" onkeyup="filterCards()" th:placeholder="#{home.searchBar}" autofocus>
       </div>
     </div>
+  </section>
 
-    <!-- Controls Section -->
-    <div class="controls-section">
-      <div class="controls-container">
-        <div class="sort-controls">
-          <label for="sort-options" th:text="#{home.sortBy}">Sort by:</label>
-          <select id="sort-options">
-            <option value="alphabetical" th:text="#{home.alphabetical}">Alphabetical</option>
-            <option value="global" th:text="#{home.globalPopularity}">Popularity</option>
-          </select>
-        </div>
-        
-        <div class="favorite-controls">
-          <button class="control-btn" th:title="#{home.setFavorites}" onclick="toggleFavoritesMode()">
-            <span class="material-symbols-rounded toggle-favourites">star</span>
-          </button>
-          <button class="control-btn" th:title="#{home.hideFavorites}" id="favouritesVisibility" onclick="toggleFavoritesView()">
-            <span id="toggle-favourites-icon" class="material-symbols-rounded toggle-favourites">visibility</span>
-          </button>
-        </div>
+  <!-- Quick Actions -->
+  <section class="quick-actions">
+    <div class="container">
+      <h2>Quick Actions</h2>
+      <div class="action-grid">
+        <a href="merge-pdfs" class="action-card">
+          <span class="material-symbols-rounded">add_to_photos</span>
+          <span>Merge PDFs</span>
+        </a>
+        <a href="split-pdfs" class="action-card">
+          <span class="material-symbols-rounded">cut</span>
+          <span>Split PDFs</span>
+        </a>
+        <a href="compress-pdf" class="action-card">
+          <span class="material-symbols-rounded">zoom_in_map</span>
+          <span>Compress</span>
+        </a>
+        <a href="pdf-to-word" class="action-card">
+          <span class="material-symbols-rounded">description</span>
+          <span>PDF to Word</span>
+        </a>
+        <a href="add-password" class="action-card">
+          <span class="material-symbols-rounded">lock</span>
+          <span>Add Password</span>
+        </a>
+        <a href="view-pdf" class="action-card">
+          <span class="material-symbols-rounded">menu_book</span>
+          <span>View PDF</span>
+        </a>
       </div>
     </div>
+  </section>
 
-    <!-- Recent Features -->
-    <div class="recent-section">
-      <div class="section-container">
-        <div class="section-header">
-          <h2 class="section-title">Recent Tools</h2>
-          <p class="section-description">Quick access to your most used PDF tools</p>
-        </div>
-        <div class="recent-features">
-          <div class="newfeature"
-            th:insert="~{fragments/navbarEntry :: navbarEntry('add-attachments', 'attachment', 'home.attachments.title', 'home.attachments.desc', 'attachments.tags', 'other')}">
-          </div>
-          <div class="newfeature"
-            th:insert="~{fragments/navbarEntry :: navbarEntry('scanner-effect', 'scanner', 'scannerEffect.title', 'scannerEffect.description', 'scannerEffect.tags', 'advance')}">
-          </div>
-          <div class="newfeature"
-            th:insert="~{fragments/navbarEntry :: navbarEntry('compress-pdf', 'zoom_in_map', 'home.compressPdfs.title', 'home.compressPdfs.desc', 'compressPDFs.tags', 'advance')}">
-          </div>
-          <div class="newfeature"
-            th:insert="~{fragments/navbarEntry :: navbarEntry('edit-table-of-contents', 'bookmark_add', 'home.editTableOfContents.title', 'home.editTableOfContents.desc', 'editTableOfContents.tags', 'advance')}">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- All Tools Section -->
-    <div class="tools-section">
-      <div class="section-container">
-        <div class="section-header">
-          <h2 class="section-title">All PDF Tools</h2>
-          <p class="section-description">Complete suite of professional PDF processing tools</p>
-        </div>
-        <div class="features-container">
-          <div class="feature-rows">
-            <div id="groupFavorites" class="feature-group">
-              <div th:replace="~{fragments/featureGroupHeader :: featureGroupHeader(groupTitle=#{navbar.favorite})}">
-              </div>
-              <div class="nav-group-container">
-              </div>
+  <!-- All Tools -->
+  <section class="all-tools">
+    <div class="container">
+      <h2>All PDF Tools</h2>
+      
+      <!-- Organize -->
+      <div class="tool-category">
+        <h3>Organize</h3>
+        <div class="tool-grid">
+          <a href="merge-pdfs" class="tool-card">
+            <span class="material-symbols-rounded">add_to_photos</span>
+            <div class="tool-info">
+              <h4>Merge PDFs</h4>
+              <p>Combine multiple PDFs into one</p>
             </div>
-            <th:block th:insert="~{fragments/navElements.html :: navElements}"></th:block>
-          </div>
+          </a>
+          <a href="split-pdfs" class="tool-card">
+            <span class="material-symbols-rounded">cut</span>
+            <div class="tool-info">
+              <h4>Split PDFs</h4>
+              <p>Divide PDF into multiple files</p>
+            </div>
+          </a>
+          <a href="rotate-pdf" class="tool-card">
+            <span class="material-symbols-rounded">rotate_right</span>
+            <div class="tool-info">
+              <h4>Rotate PDF</h4>
+              <p>Rotate pages in your PDF</p>
+            </div>
+          </a>
+          <a href="crop" class="tool-card">
+            <span class="material-symbols-rounded">crop</span>
+            <div class="tool-info">
+              <h4>Crop PDF</h4>
+              <p>Trim PDF to reduce size</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Convert -->
+      <div class="tool-category">
+        <h3>Convert</h3>
+        <div class="tool-grid">
+          <a href="pdf-to-word" class="tool-card">
+            <span class="material-symbols-rounded">description</span>
+            <div class="tool-info">
+              <h4>PDF to Word</h4>
+              <p>Convert PDF to Word format</p>
+            </div>
+          </a>
+          <a href="pdf-to-img" class="tool-card">
+            <span class="material-symbols-rounded">photo_library</span>
+            <div class="tool-info">
+              <h4>PDF to Image</h4>
+              <p>Convert PDF to images</p>
+            </div>
+          </a>
+          <a href="img-to-pdf" class="tool-card">
+            <span class="material-symbols-rounded">picture_as_pdf</span>
+            <div class="tool-info">
+              <h4>Image to PDF</h4>
+              <p>Convert images to PDF</p>
+            </div>
+          </a>
+          <a href="file-to-pdf" class="tool-card">
+            <span class="material-symbols-rounded">draft</span>
+            <div class="tool-info">
+              <h4>File to PDF</h4>
+              <p>Convert any file to PDF</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Security -->
+      <div class="tool-category">
+        <h3>Security</h3>
+        <div class="tool-grid">
+          <a href="add-password" class="tool-card">
+            <span class="material-symbols-rounded">lock</span>
+            <div class="tool-info">
+              <h4>Add Password</h4>
+              <p>Encrypt PDF with password</p>
+            </div>
+          </a>
+          <a href="remove-password" class="tool-card">
+            <span class="material-symbols-rounded">lock_open_right</span>
+            <div class="tool-info">
+              <h4>Remove Password</h4>
+              <p>Remove PDF protection</p>
+            </div>
+          </a>
+          <a href="sign" class="tool-card">
+            <span class="material-symbols-rounded">signature</span>
+            <div class="tool-info">
+              <h4>Sign PDF</h4>
+              <p>Add digital signature</p>
+            </div>
+          </a>
+          <a href="add-watermark" class="tool-card">
+            <span class="material-symbols-rounded">water_drop</span>
+            <div class="tool-info">
+              <h4>Add Watermark</h4>
+              <p>Add custom watermark</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- View & Edit -->
+      <div class="tool-category">
+        <h3>View & Edit</h3>
+        <div class="tool-grid">
+          <a href="view-pdf" class="tool-card">
+            <span class="material-symbols-rounded">menu_book</span>
+            <div class="tool-info">
+              <h4>View PDF</h4>
+              <p>View and annotate PDFs</p>
+            </div>
+          </a>
+          <a href="add-page-numbers" class="tool-card">
+            <span class="material-symbols-rounded">123</span>
+            <div class="tool-info">
+              <h4>Add Page Numbers</h4>
+              <p>Add numbering to pages</p>
+            </div>
+          </a>
+          <a href="extract-images" class="tool-card">
+            <span class="material-symbols-rounded">photo_library</span>
+            <div class="tool-info">
+              <h4>Extract Images</h4>
+              <p>Extract images from PDF</p>
+            </div>
+          </a>
+          <a href="change-metadata" class="tool-card">
+            <span class="material-symbols-rounded">assignment</span>
+            <div class="tool-info">
+              <h4>Change Metadata</h4>
+              <p>Edit PDF properties</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Advanced -->
+      <div class="tool-category">
+        <h3>Advanced</h3>
+        <div class="tool-grid">
+          <a href="compress-pdf" class="tool-card">
+            <span class="material-symbols-rounded">zoom_in_map</span>
+            <div class="tool-info">
+              <h4>Compress PDF</h4>
+              <p>Reduce PDF file size</p>
+            </div>
+          </a>
+          <a href="ocr-pdf" class="tool-card">
+            <span class="material-symbols-rounded">quick_reference_all</span>
+            <div class="tool-info">
+              <h4>OCR PDF</h4>
+              <p>Extract text from scans</p>
+            </div>
+          </a>
+          <a href="repair" class="tool-card">
+            <span class="material-symbols-rounded">build</span>
+            <div class="tool-info">
+              <h4>Repair PDF</h4>
+              <p>Fix corrupted PDFs</p>
+            </div>
+          </a>
+          <a href="pipeline" class="tool-card">
+            <span class="material-symbols-rounded">family_history</span>
+            <div class="tool-info">
+              <h4>Pipeline</h4>
+              <p>Automate PDF workflows</p>
+            </div>
+          </a>
         </div>
       </div>
     </div>
-
-    <!-- No footer for PDF1 - clean design -->
-  </div>
-
-  <!-- Survey Modal -->
-  <div class="modal fade" id="surveyModal" tabindex="-1" role="dialog" aria-labelledby="surveyModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="surveyModalLabel" th:text="#{survey.title}">PDF1 Survey</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p th:text="#{survey.meeting.1}">If you're using PDF1 at work, we'd love to speak to you. We're offering free technical support in exchange for a 15 minute user discovery session.</p>
-          <p th:text="#{survey.meeting.2}">This is a chance to:</p>
-          <p><span>🛠️</span><span th:text="#{survey.meeting.3}">Get help with deployment, integrations, or troubleshooting</span></p>
-          <p><span>📢</span><span th:text="#{survey.meeting.4}">Provide direct feedback on performance, edge cases, and feature gaps</span></p>
-          <p><span>🔍</span><span th:text="#{survey.meeting.5}">Help us refine PDF1 for real-world enterprise use</span></p>
-          <p th:text="#{survey.meeting.6}">If you're interested, you can book time with our team directly.</p>
-          <p th:text="#{survey.meeting.7}">Looking forward to digging into your use cases and making PDF1 even better!</p>
-          <a href="https://calendly.com/d/crsr-tz6-487" target="_blank" class="btn btn-primary" id="takeSurvey2" th:text="#{survey.meeting.button}">Book meeting</a>
-          <br><br>
-          <p th:text="#{survey.meeting.notInterested}">Not a business and/or interested in a meeting?</p>
-          <p th:text="#{survey.please}">Please consider taking our survey!</p>
-          <a href="https://forms.gle/example" target="_blank" class="btn btn-secondary" id="takeSurvey" th:text="#{survey.button}">Take Survey</a>
-        </div>
-        <div class="modal-footer">
-          <div class="form-check mb-3">
-            <input type="checkbox" id="dontShowAgain">
-            <label for="dontShowAgain" th:text="#{survey.dontShowAgain}">Don't show again</label>
-          </div>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{close}">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  </section>
 
   <script th:inline="javascript">
-    window.showSurvey = /*[[${showSurveyFromDocker}]]*/ true
+    function filterCards() {
+      const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+      const cards = document.querySelectorAll('.tool-card, .action-card');
+      
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
   </script>
-  <script th:src="@{'/js/pages/home.js'}" th:inline="javascript"></script>
-  <script th:src="@{'/js/homecard.js'}" th:inline="javascript"></script>
 </body>
 </html>
