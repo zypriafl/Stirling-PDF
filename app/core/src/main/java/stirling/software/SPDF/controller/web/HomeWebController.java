@@ -67,6 +67,12 @@ public class HomeWebController {
         String showSurvey = System.getenv("SHOW_SURVEY");
         boolean showSurveyValue = showSurvey == null || "true".equalsIgnoreCase(showSurvey);
         model.addAttribute("showSurveyFromDocker", showSurveyValue);
+
+        // Check brand and return appropriate template
+        String brand = applicationProperties.getUi().getBrand();
+        if ("pdf1".equals(brand)) {
+            return "home-pdf1";
+        }
         return "home";
     }
 

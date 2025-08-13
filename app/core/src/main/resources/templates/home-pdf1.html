@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}"
+  xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <th:block th:insert="~{fragments/common :: head(title='')}"></th:block>
+  <link rel="stylesheet" th:href="@{'/css/home-pdf1.css'}">
+</head>
+
+<body>
+  <div class="page-container" style="max-height:100vh;">
+    <th:block th:insert="~{fragments/navbar.html :: navbar}"></th:block>
+    
+    <!-- PDF1 Hero Section -->
+    <div class="pdf1-hero">
+      <div class="hero-content">
+        <div class="hero-icon">
+          <img th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="PDF1" class="hero-logo">
+        </div>
+        <h1 class="hero-title">Professional PDF Tools</h1>
+        <p class="hero-subtitle" th:text="${@homeText != 'null' and @homeText != null and @homeText != ''} ? ${@homeText} : #{home.desc}">
+          Transform your PDF workflow with powerful, easy-to-use tools
+        </p>
+        <div class="hero-search">
+          <div class="search-container">
+            <span class="material-symbols-rounded search-icon">search</span>
+            <input type="text" id="searchBar" onkeyup="filterCards()" th:placeholder="#{home.searchBar}" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Section -->
+    <div class="controls-section">
+      <div class="controls-container">
+        <div class="sort-controls">
+          <label for="sort-options" th:text="#{home.sortBy}">Sort by:</label>
+          <select id="sort-options">
+            <option value="alphabetical" th:text="#{home.alphabetical}">Alphabetical</option>
+            <option value="global" th:text="#{home.globalPopularity}">Popularity</option>
+          </select>
+        </div>
+        
+        <div class="favorite-controls">
+          <button class="control-btn" th:title="#{home.setFavorites}" onclick="toggleFavoritesMode()">
+            <span class="material-symbols-rounded toggle-favourites">star</span>
+          </button>
+          <button class="control-btn" th:title="#{home.hideFavorites}" id="favouritesVisibility" onclick="toggleFavoritesView()">
+            <span id="toggle-favourites-icon" class="material-symbols-rounded toggle-favourites">visibility</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Features -->
+    <div class="recent-section">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Recent Tools</h2>
+          <p class="section-description">Quick access to your most used PDF tools</p>
+        </div>
+        <div class="recent-features">
+          <div class="newfeature"
+            th:insert="~{fragments/navbarEntry :: navbarEntry('add-attachments', 'attachment', 'home.attachments.title', 'home.attachments.desc', 'attachments.tags', 'other')}">
+          </div>
+          <div class="newfeature"
+            th:insert="~{fragments/navbarEntry :: navbarEntry('scanner-effect', 'scanner', 'scannerEffect.title', 'scannerEffect.description', 'scannerEffect.tags', 'advance')}">
+          </div>
+          <div class="newfeature"
+            th:insert="~{fragments/navbarEntry :: navbarEntry('compress-pdf', 'zoom_in_map', 'home.compressPdfs.title', 'home.compressPdfs.desc', 'compressPDFs.tags', 'advance')}">
+          </div>
+          <div class="newfeature"
+            th:insert="~{fragments/navbarEntry :: navbarEntry('edit-table-of-contents', 'bookmark_add', 'home.editTableOfContents.title', 'home.editTableOfContents.desc', 'editTableOfContents.tags', 'advance')}">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Tools Section -->
+    <div class="tools-section">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">All PDF Tools</h2>
+          <p class="section-description">Complete suite of professional PDF processing tools</p>
+        </div>
+        <div class="features-container">
+          <div class="feature-rows">
+            <div id="groupFavorites" class="feature-group">
+              <div th:replace="~{fragments/featureGroupHeader :: featureGroupHeader(groupTitle=#{navbar.favorite})}">
+              </div>
+              <div class="nav-group-container">
+              </div>
+            </div>
+            <th:block th:insert="~{fragments/navElements.html :: navElements}"></th:block>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <th:block th:insert="~{fragments/footer.html :: footer}"></th:block>
+  </div>
+
+  <!-- Survey Modal -->
+  <div class="modal fade" id="surveyModal" tabindex="-1" role="dialog" aria-labelledby="surveyModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="surveyModalLabel" th:text="#{survey.title}">PDF1 Survey</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p th:text="#{survey.meeting.1}">If you're using PDF1 at work, we'd love to speak to you. We're offering free technical support in exchange for a 15 minute user discovery session.</p>
+          <p th:text="#{survey.meeting.2}">This is a chance to:</p>
+          <p><span>🛠️</span><span th:text="#{survey.meeting.3}">Get help with deployment, integrations, or troubleshooting</span></p>
+          <p><span>📢</span><span th:text="#{survey.meeting.4}">Provide direct feedback on performance, edge cases, and feature gaps</span></p>
+          <p><span>🔍</span><span th:text="#{survey.meeting.5}">Help us refine PDF1 for real-world enterprise use</span></p>
+          <p th:text="#{survey.meeting.6}">If you're interested, you can book time with our team directly.</p>
+          <p th:text="#{survey.meeting.7}">Looking forward to digging into your use cases and making PDF1 even better!</p>
+          <a href="https://calendly.com/d/crsr-tz6-487" target="_blank" class="btn btn-primary" id="takeSurvey2" th:text="#{survey.meeting.button}">Book meeting</a>
+          <br><br>
+          <p th:text="#{survey.meeting.notInterested}">Not a business and/or interested in a meeting?</p>
+          <p th:text="#{survey.please}">Please consider taking our survey!</p>
+          <a href="https://forms.gle/example" target="_blank" class="btn btn-secondary" id="takeSurvey" th:text="#{survey.button}">Take Survey</a>
+        </div>
+        <div class="modal-footer">
+          <div class="form-check mb-3">
+            <input type="checkbox" id="dontShowAgain">
+            <label for="dontShowAgain" th:text="#{survey.dontShowAgain}">Don't show again</label>
+          </div>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{close}">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script th:inline="javascript">
+    window.showSurvey = /*[[${showSurveyFromDocker}]]*/ true
+  </script>
+  <script th:src="@{'/js/pages/home.js'}" th:inline="javascript"></script>
+  <script th:src="@{'/js/homecard.js'}" th:inline="javascript"></script>
+</body>
+</html>
