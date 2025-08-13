@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <!-- Hero Section -->
+  <!-- Compact Hero Section -->
   <section class="hero">
     <div class="hero-container">
       <div class="hero-content">
@@ -51,14 +51,9 @@
     </div>
   </section>
 
-  <!-- USP Section with Glassmorphism -->
+  <!-- Compact USP Section -->
   <section class="usp-section">
     <div class="container">
-      <div class="usp-header">
-        <h2 class="section-title">Why Choose PDF1?</h2>
-        <p class="section-subtitle">Enterprise-grade security meets German engineering</p>
-      </div>
-      
       <div class="usp-grid">
         <div class="usp-card glass-card" data-aos="fade-up" data-aos-delay="100">
           <div class="card-icon">
@@ -66,7 +61,7 @@
             <div class="icon-glow"></div>
           </div>
           <h3>Military-Grade Security</h3>
-          <p>End-to-end encryption with zero-knowledge architecture. Your files never touch our servers.</p>
+          <p>End-to-end encryption with zero-knowledge architecture</p>
           <div class="card-badge">ISO 27001</div>
         </div>
         
@@ -76,7 +71,7 @@
             <div class="icon-glow"></div>
           </div>
           <h3>Zero Storage Policy</h3>
-          <p>Files are processed in memory and immediately destroyed. No traces, no logs, no storage.</p>
+          <p>Files processed in memory and immediately destroyed</p>
           <div class="card-badge">GDPR Compliant</div>
         </div>
         
@@ -86,23 +81,8 @@
             <div class="icon-glow"></div>
           </div>
           <h3>German Engineering</h3>
-          <p>Built in Germany with strict EU data protection standards and transparent operations.</p>
+          <p>Built in Germany with strict EU data protection standards</p>
           <div class="card-badge">Made in DE</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Smart Search -->
-  <section class="search-section">
-    <div class="search-container">
-      <div class="search-wrapper glass-card">
-        <div class="search-icon">
-          <span class="material-symbols-rounded">search</span>
-        </div>
-        <input type="text" id="searchBar" onkeyup="filterCards()" th:placeholder="'Search 50+ PDF tools...'" autofocus>
-        <div class="search-suggestions">
-          <span class="suggestion">Try: merge, compress, convert</span>
         </div>
       </div>
     </div>
@@ -354,36 +334,6 @@
         animateCounter(counter, target);
       });
     });
-
-    // Enhanced search with animations
-    function filterCards() {
-      const searchTerm = document.getElementById('searchBar').value.toLowerCase();
-      const cards = document.querySelectorAll('.tool-card, .action-card');
-      
-      cards.forEach((card, index) => {
-        const text = card.textContent.toLowerCase();
-        if (text.includes(searchTerm)) {
-          card.style.display = 'flex';
-          card.style.animation = `fadeInUp 0.3s ease ${index * 0.05}s both`;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-      
-      // Filter USP cards for security terms
-      const uspCards = document.querySelectorAll('.usp-card');
-      const securityTerms = ['secure', 'security', 'privacy', 'german', 'storage', 'save', 'delete', 'encrypt'];
-      const isSecuritySearch = securityTerms.some(term => searchTerm.includes(term));
-      
-      uspCards.forEach(card => {
-        if (searchTerm === '' || isSecuritySearch) {
-          card.style.display = 'block';
-          card.style.animation = 'fadeInUp 0.3s ease both';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
 
     // Parallax effect for floating shapes
     document.addEventListener('mousemove', (e) => {

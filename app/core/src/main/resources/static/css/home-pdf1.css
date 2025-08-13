@@ -115,9 +115,9 @@ body {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Hero Section */
+/* Compact Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,20 +136,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .hero-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .logo-glow {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,8 +174,8 @@ body {
 }
 
 .logo-icon {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   filter: brightness(0) invert(1);
 }
 
@@ -186,7 +186,7 @@ body {
 
 .title-line {
   display: block;
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 800;
   background: linear-gradient(45deg, #fff, #f0f0f0);
   -webkit-background-clip: text;
@@ -198,7 +198,7 @@ body {
 
 .title-subtitle {
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.8);
   animation: fadeInUp 1s ease-out 0.3s both;
@@ -207,7 +207,7 @@ body {
 /* Hero Stats */
 .hero-stats {
   display: flex;
-  gap: 3rem;
+  gap: 2.5rem;
   justify-content: center;
   flex-wrap: wrap;
   animation: fadeInUp 1s ease-out 0.6s both;
@@ -219,7 +219,7 @@ body {
 }
 
 .stat-number {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(45deg, #fff, #f0f0f0);
   -webkit-background-clip: text;
@@ -229,48 +229,27 @@ body {
 }
 
 .stat-label {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);
   margin-top: 0.5rem;
 }
 
-/* USP Section */
+/* Compact USP Section */
 .usp-section {
-  padding: 6rem 0;
+  padding: 3rem 0;
   position: relative;
-}
-
-.usp-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  color: white;
-}
-
-.section-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(45deg, #fff, #f0f0f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-subtitle {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .usp-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .usp-card {
-  padding: 3rem 2rem;
+  padding: 2rem 1.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -294,11 +273,11 @@ body {
 .card-icon {
   position: relative;
   display: inline-block;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .card-icon .material-symbols-rounded {
-  font-size: 4rem;
+  font-size: 3rem;
   color: white;
   position: relative;
   z-index: 2;
@@ -309,99 +288,48 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
   border-radius: 50%;
   animation: glow 2s ease-in-out infinite alternate;
 }
 
 .usp-card h3 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .usp-card p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .card-badge {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
+  border-radius: 15px;
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   backdrop-filter: blur(10px);
 }
 
-/* Search Section */
-.search-section {
-  padding: 4rem 0;
-  position: relative;
-}
-
-.search-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.search-wrapper {
-  position: relative;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.search-icon {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.search-icon .material-symbols-rounded {
-  font-size: 2rem;
-}
-
-.search-wrapper input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  outline: none;
-  padding: 1rem 0;
-}
-
-.search-wrapper input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.search-suggestions {
-  position: absolute;
-  bottom: -2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-}
-
 /* Quick Actions */
 .quick-actions {
-  padding: 6rem 0;
+  padding: 4rem 0;
   position: relative;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   color: white;
 }
 
@@ -482,14 +410,14 @@ body {
 
 /* All Tools */
 .all-tools {
-  padding: 6rem 0;
+  padding: 4rem 0;
   position: relative;
 }
 
 .tools-container {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 3rem;
 }
 
 .tool-category {
@@ -617,12 +545,16 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .hero {
+    min-height: 60vh;
+  }
+  
   .title-line {
     font-size: 2.5rem;
   }
   
   .title-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   
   .hero-stats {
@@ -639,7 +571,7 @@ body {
   }
   
   .usp-card {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
   }
   
   .action-grid {
@@ -648,10 +580,6 @@ body {
   
   .tool-grid {
     grid-template-columns: 1fr;
-  }
-  
-  .section-title {
-    font-size: 2rem;
   }
   
   .section-header h2 {
@@ -665,6 +593,7 @@ body {
 
 @media (max-width: 480px) {
   .hero {
+    min-height: 50vh;
     padding: 1rem 0;
   }
   
@@ -689,10 +618,6 @@ body {
   
   .usp-card {
     padding: 1.5rem 1rem;
-  }
-  
-  .search-wrapper {
-    padding: 1.5rem;
   }
   
   .action-card {
