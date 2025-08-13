@@ -156,6 +156,7 @@ ui:
   appName: '' # application's visible name
   homeDescription: '' # short description or tagline shown on the homepage
   appNameNavbar: '' # name displayed on the navigation bar
+  brand: konfuzio # brand configuration: "konfuzio" for original design, "pdf1" for modern design
   languages: # If empty, all languages are enabled. To display only German and Polish ["de_DE", "pl_PL"]. British English is always enabled.
     - "de_DE"
     - "en_US"

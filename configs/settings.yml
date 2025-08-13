@@ -116,6 +116,7 @@ ui:
   appName: Konfuzio PDF Tools # application's visible name
   homeDescription: PDF Tools from Konfuzio # short description or tagline shown on the homepage
   appNameNavbar: Konfuzio # name displayed on the navigation bar
+  brand: pdf1 # brand configuration: "konfuzio" for original design, "pdf1" for modern design
   languages: # If empty, all languages are enabled. To display only German and Polish ["de_DE", "pl_PL"]. British English is always enabled.
     - "de_DE"
     - "en_US"

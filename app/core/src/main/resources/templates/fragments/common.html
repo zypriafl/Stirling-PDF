@@ -10,15 +10,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Icons -->
-  <link rel="icon" type="image/svg+xml" th:href="@{'/favicon.svg?v=konfuzio'}">
-  <link rel="apple-touch-icon" sizes="180x180" th:href="@{'/favicon.svg?v=konfuzio'}">
-  <link rel="icon" type="image/png" sizes="32x32" th:href="@{'/favicon-32x32.png?v=konfuzio'}">
-  <link rel="icon" type="image/png" sizes="16x16" th:href="@{'/favicon-16x16.png?v=konfuzio'}">
+  <link rel="icon" type="image/svg+xml" th:href="@{'/images/' + ${@currentBrand} + '/favicon.svg'}">
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{'/images/' + ${@currentBrand} + '/apple-touch-icon.png'}">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{'/images/' + ${@currentBrand} + '/favicon-32x32.png'}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{'/images/' + ${@currentBrand} + '/favicon-16x16.png'}">
   <link rel="manifest" th:href="@{'/site.webmanifest'}" crossorigin="use-credentials">
-  <link rel="mask-icon" th:href="@{'/favicon.svg?v=konfuzio'}" color="#44b78b">
-  <link rel="shortcut icon" th:href="@{'/favicon.ico?v=konfuzio'}">
-  <meta name="apple-mobile-web-app-title" content="Konfuzio PDF">
-  <meta name="application-name" content="Konfuzio PDF">
+  <link rel="mask-icon" th:href="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" color="#44b78b">
+  <link rel="shortcut icon" th:href="@{'/images/' + ${@currentBrand} + '/favicon.ico'}">
+  <meta name="apple-mobile-web-app-title" th:content="${@currentBrand == 'pdf1' ? 'PDF1' : 'Konfuzio PDF'}">
+  <meta name="application-name" th:content="${@currentBrand == 'pdf1' ? 'PDF1' : 'Konfuzio PDF'}">
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="theme-color" content="#ffffff">
 

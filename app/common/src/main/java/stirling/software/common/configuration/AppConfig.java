@@ -106,6 +106,11 @@ public class AppConfig {
         return languages != null ? languages : new ArrayList<>();
     }
 
+    @Bean(name = "currentBrand")
+    public String currentBrand() {
+        return applicationProperties.getUi().getBrand();
+    }
+
     @Bean
     public String contextPath(@Value("${server.servlet.context-path}") String contextPath) {
         return contextPath;

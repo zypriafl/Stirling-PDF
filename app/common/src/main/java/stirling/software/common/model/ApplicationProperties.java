@@ -443,6 +443,7 @@ public class ApplicationProperties {
         private String homeDescription;
         private String appNameNavbar;
         private List<String> languages;
+        private String brand = "konfuzio"; // Default brand, can be "konfuzio" or "pdf1"
 
         public String getAppName() {
             return appName != null && appName.trim().length() > 0 ? appName : null;
@@ -458,6 +459,10 @@ public class ApplicationProperties {
             return appNameNavbar != null && appNameNavbar.trim().length() > 0
                     ? appNameNavbar
                     : null;
+        }
+
+        public String getBrand() {
+            return brand != null && brand.trim().length() > 0 ? brand : "konfuzio";
         }
     }
 
