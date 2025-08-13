@@ -60,7 +60,7 @@
   border-color: var(--md-nav-color-on-separator)">
     <div class="container " style="max-width: 100%;">
       <a class="navbar-brand" th:href="${@contextPath}" style="display: flex;">
-        <img class="main-icon" th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg'}" alt="icon">
+        <img class="main-icon" th:src="@{'/images/' + ${@currentBrand} + '/favicon.svg?v=' + ${@currentBrand}}" alt="icon">
         <span class="icon-text" th:text="${@currentBrand == 'pdf1' ? 'PDF1' : @navBarText}"></span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
