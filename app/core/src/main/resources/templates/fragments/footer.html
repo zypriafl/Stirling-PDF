@@ -1,6 +1,21 @@
 <footer th:fragment="footer" id="footer" class="text-center">
-  
+
   <script type="module" th:src="@{'/js/thirdParty/cookieconsent-config.js'}" th:if="${@analyticsEnabled}"></script>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <a th:href="#{cta.banner.link}" class="cta-banner-link" target="_blank">
+      <span class="cta-banner-icon material-symbols-rounded">rocket_launch</span>
+      <div class="cta-banner-body">
+        <span class="cta-banner-text" th:text="#{cta.banner.text}">Konfuzio AI can do even more.</span>
+        <span class="cta-banner-action">
+          <span th:text="#{cta.banner.button}">Learn more</span>
+          <span class="material-symbols-rounded cta-arrow">arrow_forward</span>
+        </span>
+      </div>
+    </a>
+  </div>
+
   <div class="footer-center">
     <!-- Links section -->
     <div class="d-flex justify-content-center">
