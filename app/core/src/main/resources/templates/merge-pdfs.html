@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{merge.title}, header=#{merge.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{merge.title}, header=#{merge.header}, seoTitle=#{merge.seoTitle}, metaDescription=#{merge.metaDescription})}"></th:block>
   <link rel="stylesheet" th:href="@{'/css/merge.css'}">
 </head>
 

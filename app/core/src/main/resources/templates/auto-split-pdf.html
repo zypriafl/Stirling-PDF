@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{autoSplitPDF.title}, header=#{autoSplitPDF.header})}">
+  <th:block th:insert="~{fragments/common :: head(title=#{autoSplitPDF.title}, header=#{autoSplitPDF.header}, seoTitle=#{autoSplitPDF.seoTitle}, metaDescription=#{autoSplitPDF.metaDescription})}">
   </th:block>
 </head>
 

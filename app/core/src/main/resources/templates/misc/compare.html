@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{compare.title}, header=#{compare.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{compare.title}, header=#{compare.header}, seoTitle=#{compare.seoTitle}, metaDescription=#{compare.metaDescription})}"></th:block>
   <style>
     .result-column {
       border: 1px solid #ccc;

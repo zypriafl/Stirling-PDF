@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
   <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{PDFToXML.title}, header=#{PDFToXML.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{PDFToXML.title}, header=#{PDFToXML.header}, seoTitle=#{PDFToXML.seoTitle}, metaDescription=#{PDFToXML.metaDescription})}"></th:block>
   </head>
 
   <body>

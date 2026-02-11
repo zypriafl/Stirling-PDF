@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
   <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{split-by-sections.title}, header=#{split-by-sections.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{split-by-sections.title}, header=#{split-by-sections.header}, seoTitle=#{split-by-sections.seoTitle}, metaDescription=#{split-by-sections.metaDescription})}"></th:block>
     <link rel="stylesheet" th:href="@{'/css/split-pdf-by-sections.css'}">
   </head>
 

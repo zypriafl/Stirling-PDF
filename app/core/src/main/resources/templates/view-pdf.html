@@ -24,7 +24,7 @@ See https://github.com/adobe-type-tools/cmap-resources
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{redact.title}, header=#{redact.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{redact.title}, header=#{redact.header}, seoTitle=#{viewPdf.seoTitle}, metaDescription=#{viewPdf.metaDescription})}"></th:block>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="google" content="notranslate">

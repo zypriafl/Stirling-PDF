@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{pageRemover.title}, header=#{pageRemover.header})}">
+  <th:block th:insert="~{fragments/common :: head(title=#{pageRemover.title}, header=#{pageRemover.header}, seoTitle=#{pageRemover.seoTitle}, metaDescription=#{pageRemover.metaDescription})}">
   </th:block>
 </head>
 

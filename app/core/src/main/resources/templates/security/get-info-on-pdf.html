@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:lang="${#locale.language}" th:dir="#{language.direction}" th:data-language="${#locale.toString()}" xmlns:th="https://www.thymeleaf.org">
   <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{getPdfInfo.title}, header=#{getPdfInfo.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{getPdfInfo.title}, header=#{getPdfInfo.header}, seoTitle=#{getPdfInfo.seoTitle}, metaDescription=#{getPdfInfo.metaDescription})}"></th:block>
   </head>
 
   <body>

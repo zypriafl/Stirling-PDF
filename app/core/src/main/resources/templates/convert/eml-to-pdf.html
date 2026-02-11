@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{EMLToPDF.title}, header=#{EMLToPDF.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{EMLToPDF.title}, header=#{EMLToPDF.header}, seoTitle=#{EMLToPDF.seoTitle}, metaDescription=#{EMLToPDF.metaDescription})}"></th:block>
 </head>
 
 <body>

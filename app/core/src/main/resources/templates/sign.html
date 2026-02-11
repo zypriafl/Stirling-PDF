@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{sign.title}, header=#{sign.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{sign.title}, header=#{sign.header}, seoTitle=#{sign.seoTitle}, metaDescription=#{sign.metaDescription})}"></th:block>
   <link rel="stylesheet" th:href="@{'/css/sign.css'}">
 
   <th:block th:each="font : ${fonts}">

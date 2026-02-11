@@ -3,7 +3,7 @@
   mozdisallowselectionprint xmlns:th="https://www.thymeleaf.org">
 
 <head>
-  <th:block th:insert="~{fragments/common :: head(title=#{redact.title}, header=#{redact.header})}"></th:block>
+  <th:block th:insert="~{fragments/common :: head(title=#{redact.title}, header=#{redact.header}, seoTitle=#{redact.seoTitle}, metaDescription=#{redact.metaDescription})}"></th:block>
   <script th:src="@{'/js/thirdParty/popper.min.js'}"></script>
   <script th:src="@{'/js/thirdParty/bootstrap.min.js'}"></script>
 
