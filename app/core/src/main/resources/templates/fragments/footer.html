@@ -4,14 +4,16 @@
 
   <!-- CTA Banner -->
   <div class="cta-banner">
-    <a th:href="#{cta.banner.link}" class="cta-banner-link" target="_blank">
-      <span class="cta-banner-icon material-symbols-rounded">rocket_launch</span>
-      <div class="cta-banner-body">
-        <span class="cta-banner-text" th:text="#{cta.banner.text}">Konfuzio AI can do even more.</span>
-        <span class="cta-banner-action">
-          <span th:text="#{cta.banner.button}">Learn more</span>
-          <span class="material-symbols-rounded cta-arrow">arrow_forward</span>
-        </span>
+    <a th:href="#{cta.banner.link}" class="cta-banner-link" target="_blank" rel="noopener">
+      <div class="cta-banner-badge">
+        <span class="material-symbols-rounded">auto_awesome</span>
+        <span>AI-Powered</span>
+      </div>
+      <div class="cta-banner-title" th:text="#{cta.banner.title}">Need more than PDF tools?</div>
+      <div class="cta-banner-text" th:text="#{cta.banner.text}">Konfuzio AI automates your entire document workflow.</div>
+      <div class="cta-banner-btn">
+        <span th:text="#{cta.banner.button}">Get started free</span>
+        <span class="material-symbols-rounded cta-arrow">arrow_forward</span>
       </div>
     </a>
   </div>
