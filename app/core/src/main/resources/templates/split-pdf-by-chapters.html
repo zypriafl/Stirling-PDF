@@ -21,7 +21,7 @@
               </svg>
               <span class="tool-header-text" th:text="#{splitByChapters.header}"></span>
             </div>
-            <div><p th:text="#{home.splitByChapters.desc}"></p></div>
+            <div><p th:text="#{home.splitPdfByChapters.desc}"></p></div>
             <form th:action="@{'/api/v1/general/split-pdf-by-chapters'}" method="post" enctype="multipart/form-data">
               <div
                 th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf')}">

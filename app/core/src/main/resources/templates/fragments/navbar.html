@@ -59,7 +59,7 @@
   border-bottom-width: 1px;
   border-color: var(--md-nav-color-on-separator)">
     <div class="container " style="max-width: 100%;">
-      <a class="navbar-brand" th:href="${@contextPath}" style="display: flex;">
+      <a class="navbar-brand" th:href="#{navbar.logoLink}" style="display: flex;">
         <img class="main-icon" th:src="@{'/favicon.svg'}" alt="icon">
         <span class="icon-text" th:text="${@navBarText}"></span>
       </a>
@@ -290,13 +290,8 @@
 
     }
     document.addEventListener('DOMContentLoaded', function () {
-      const navbarLink = document.querySelector(".navbar-brand");
-      const contentPath = /*[[${@contextPath}]]*/ '';
-      if (localStorage.getItem("defaultView") === "home-legacy") {
-        navbarLink.setAttribute("href", contentPath + "home-legacy");
-      } else {
-        navbarLink.setAttribute("href", contentPath);
-      }
+      // Navbar brand logo links to external Konfuzio site (set via message property)
+      // The "Tools" nav item handles navigation to the tools listing
     });
   </script>
 </div>
