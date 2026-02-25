@@ -55,6 +55,11 @@ label {
   gap: 10px;
 }
 
+/* Hide CTA on multi-tool page — fixed action bar would cover it */
+.cta-banner {
+  display: none;
+}
+
 /* Action Button Styles */
 .mt-action-btn {
   position: fixed;
